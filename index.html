@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tripwise AI prototype — plan thoughtfully, compare transparently.">
+<title>Tripwise AI — Travel, thoughtfully</title>
+<style>
+:root {
+  --site-primary: #174f46;
+  --site-secondary: #e4eee6;
+  --site-background: #f7f7f1;
+  --site-on-primary: #ffffff;
+  --site-on-secondary: #193f37;
+  --site-on-background: #202923;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --ink: #202923;
+  --muted: #68756c;
+  --line: #dce3da;
+  --paper: #fffefa;
+  --accent: #d8e9de;
+  --gold: #c68b46;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: light-dark(#f7f7f1, #111814); color: light-dark(var(--ink), #edf4ee); }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+#app { min-height: 100vh; width: 100%; border-radius: 0; background-color: light-dark(var(--site-background), #111814); color: light-dark(var(--site-on-background), #edf4ee); }
+.topbar { height: 72px; display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: auto; padding: 0 28px; border-bottom: 1px solid var(--line); }
+.brand { display:flex; gap:11px; align-items:center; font-weight:750; letter-spacing:-.04em; font-size:20px; }
+.logo { width:34px; height:34px; border-radius:11px; background:var(--site-primary); color:white; display:grid; place-items:center; font-size:18px; }
+.brand em { font-style:normal; color:#7a8c7f; font-weight:500; }
+.nav { display:flex; align-items:center; gap:22px; font-size:13px; color:var(--muted); }
+.nav a { color:inherit; text-decoration:none; }
+.pill { border:1px solid var(--line); border-radius:999px; padding:8px 12px; background:transparent; color:inherit; font-size:12px; }
+.hero { max-width:1200px; margin:auto; padding:54px 28px 34px; display:grid; grid-template-columns:1.1fr .9fr; gap:32px; align-items:center; }
+.eyebrow { text-transform:uppercase; letter-spacing:.16em; color:#6d8776; font-size:11px; font-weight:800; }
+h1,h2,h3,p { margin-top:0; }
+h1 { font:400 calc(52px * var(--site-heading-scale))/1.04 var(--site-font-heading); letter-spacing:-.04em; margin:15px 0 18px; max-width:600px; }
+.hero p { max-width:540px; line-height:1.7; color:var(--muted); font-size:15px; }
+.hero-actions { display:flex; gap:10px; margin-top:25px; flex-wrap:wrap; }
+.primary { background:var(--site-primary); color:white; border:1px solid var(--site-primary); border-radius:12px; padding:13px 17px; font-weight:700; }
+.secondary { background:transparent; border:1px solid var(--line); color:inherit; border-radius:12px; padding:13px 17px; font-weight:650; }
+.hero-visual { min-height:300px; border-radius:28px; background:var(--site-secondary); padding:22px; position:relative; overflow:hidden; color:#214438; }
+.sun { position:absolute; width:175px; height:175px; border-radius:50%; background:#d5b17a; right:36px; top:22px; opacity:.82; }
+.hill { position:absolute; border-radius:50% 50% 0 0; width:125%; height:180px; bottom:-75px; left:-12%; background:#8ba997; transform:rotate(-8deg); }
+.hill.two { background:#456e5d; bottom:-105px; left:13%; transform:rotate(10deg); }
+.visual-note { position:relative; z-index:2; background:rgba(255,254,250,.9); border:1px solid rgba(255,255,255,.8); border-radius:16px; padding:15px; width:210px; box-shadow:0 12px 30px #24483814; }
+.visual-note strong { display:block; font-size:13px; margin-bottom:5px; }
+.visual-note small { color:#62756a; line-height:1.5; }
+main { max-width:1200px; padding:0 28px 60px; margin:auto; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:16px; margin:18px 0 20px; }
+h2 { font:400 calc(31px * var(--site-heading-scale))/1.15 var(--site-font-heading); letter-spacing:-.025em; margin:7px 0 0; }
+.section-head p { margin:0; color:var(--muted); font-size:13px; max-width:410px; line-height:1.5; }
+.workspace { display:grid; grid-template-columns:320px 1fr; gap:18px; align-items:start; }
+.panel { background:light-dark(var(--paper), #18221c); border:1px solid var(--line); border-radius:20px; padding:21px; }
+.panel h3 { font-size:16px; margin:0 0 6px; }
+.panel .sub { color:var(--muted); font-size:12px; line-height:1.55; margin-bottom:19px; }
+.field { margin:14px 0; }
+label { display:block; font-size:12px; font-weight:700; margin-bottom:7px; }
+input,select,textarea { width:100%; border:1px solid var(--line); border-radius:10px; padding:11px 12px; background:light-dark(#fff, #111814); color:inherit; outline:none; }
+input:focus,select:focus,textarea:focus { border-color:#729a83; box-shadow:0 0 0 3px #8eae9826; }
+.two { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.chips { display:flex; flex-wrap:wrap; gap:7px; }
+.chip { border:1px solid var(--line); border-radius:999px; padding:8px 10px; background:transparent; color:inherit; font-size:12px; }
+.chip[aria-pressed="true"] { background:var(--site-secondary); color:var(--site-on-secondary); border-color:#b5cdbb; }
+.full { width:100%; margin-top:12px; }
+.results { min-width:0; }
+.result-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:13px; }
+.tabs { display:flex; gap:5px; background:light-dark(#eaece5, #263229); border-radius:12px; padding:4px; }
+.tab { border:0; background:transparent; border-radius:9px; padding:9px 12px; color:var(--muted); font-size:12px; font-weight:700; }
+.tab.active { background:light-dark(#fffefa, #111814); color:inherit; box-shadow:0 1px 3px #0000000b; }
+.demo-label { color:#8a642f; background:#f8eddc; border-radius:999px; padding:7px 10px; font-size:10px; font-weight:800; letter-spacing:.06em; white-space:nowrap; }
+.notice { border:1px solid #e8d5b4; background:light-dark(#fff7e9, #30271b); color:light-dark(#765322, #efd6aa); border-radius:12px; padding:11px 13px; font-size:11px; line-height:1.5; margin-bottom:14px; }
+.cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.option { border:1px solid var(--line); border-radius:16px; padding:15px; background:light-dark(#fffefa, #18221c); min-width:0; }
+.option .iconbox { width:35px; height:35px; display:grid; place-items:center; background:var(--site-secondary); border-radius:11px; font-size:17px; margin-bottom:12px; }
+.option h3 { font-size:14px; margin:0 0 6px; }
+.option p { font-size:11px; line-height:1.55; color:var(--muted); margin-bottom:12px; }
+.score { display:flex; align-items:center; gap:8px; margin:12px 0; }
+.score strong { font-size:22px; letter-spacing:-.05em; }
+.score span { font-size:10px; color:var(--muted); }
+.scorebar { height:5px; border-radius:9px; background:light-dark(#e8ebe4, #2b382e); overflow:hidden; margin:7px 0 13px; }
+.scorebar span { display:block; height:100%; background:#6c947a; border-radius:9px; }
+.tag { display:inline-block; border-radius:6px; padding:5px 6px; background:light-dark(#edf3ed, #26362a); color:light-dark(#456c50, #b9d9bd); font-size:10px; font-weight:700; margin:2px 2px 2px 0; }
+.small-link { color:light-dark(#276c5c, #9bd0b9); font-size:11px; font-weight:700; text-decoration:none; }
+.divider { height:1px; background:var(--line); margin:14px 0; }
+.itinerary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.day { border:1px solid var(--line); border-radius:15px; padding:15px; background:light-dark(#fffefa, #18221c); }
+.day-label { color:#73907c; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.day h3 { font-size:14px; margin:8px 0 12px; }
+.stop { display:flex; gap:10px; padding:9px 0; border-top:1px solid var(--line); }
+.stop .time { min-width:48px; color:var(--muted); font-size:10px; padding-top:2px; }
+.stop strong { display:block; font-size:11px; margin-bottom:3px; }
+.stop small { display:block; font-size:10px; line-height:1.45; color:var(--muted); }
+.reviews-grid { display:grid; grid-template-columns:1fr .9fr; gap:12px; }
+textarea { min-height:150px; resize:vertical; line-height:1.6; font-size:12px; }
+.analysis-results { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.metric { border:1px solid var(--line); border-radius:12px; padding:12px; }
+.metric span { display:block; color:var(--muted); font-size:10px; margin-bottom:6px; }
+.metric strong { font-size:16px; }
+.analysis-summary { border-radius:12px; padding:13px; background:var(--site-secondary); color:var(--site-on-secondary); font-size:12px; line-height:1.65; grid-column:1/-1; }
+.bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+.compare-table { width:100%; border-collapse:collapse; font-size:12px; }
+.compare-table th,.compare-table td { text-align:left; padding:12px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+.compare-table th { color:var(--muted); font-size:10px; font-weight:750; text-transform:uppercase; letter-spacing:.05em; }
+.source-row { display:flex; justify-content:space-between; gap:10px; border-bottom:1px solid var(--line); padding:10px 0; font-size:12px; }
+.source-row:last-child { border-bottom:0; }
+.source-row span { color:var(--muted); font-size:11px; }
+footer { border-top:1px solid var(--line); padding:25px 28px; max-width:1200px; margin:auto; color:var(--muted); display:flex; justify-content:space-between; gap:15px; font-size:11px; line-height:1.6; }
+footer strong { color:inherit; }
+.hidden { display:none !important; }
+.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); padding:12px 16px; background:#193f37; color:white; border-radius:12px; box-shadow:0 8px 24px #0002; font-size:12px; z-index:10; display:none; max-width:calc(100% - 30px); }
+@media (max-width:900px) { .hero { grid-template-columns:1fr; padding-top:38px; } .hero-visual { min-height:245px; } .workspace { grid-template-columns:1fr; } .cards { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (max-width:650px) { .topbar { height:62px; padding:0 17px; } .nav a { display:none; } .nav { gap:8px; } .hero { padding:34px 17px 26px; gap:24px; } h1 { font-size:42px; } main { padding:0 17px 42px; } .section-head { align-items:start; flex-direction:column; } .cards,.itinerary { grid-template-columns:1fr; } .option { display:grid; grid-template-columns:42px 1fr; column-gap:9px; } .option .iconbox { grid-row:span 2; } .option .score,.option .scorebar,.option .tag,.option .small-link { grid-column:2; } .result-toolbar { align-items:start; flex-direction:column; } .tabs { width:100%; } .tab { flex:1; padding:9px 6px; } .reviews-grid,.bottom-grid { grid-template-columns:1fr; } footer { padding:22px 17px; flex-direction:column; } .panel { padding:17px; } .sun { right:18px; width:135px; height:135px; } .visual-note { width:190px; } }
+@media (prefers-color-scheme: dark) { .notice { border-color:#5e4b2c; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="logo">✳</span><span>tripwise <em>AI</em></span></div>
+    <nav class="nav"><a href="#planner">Planner</a><a href="#reviews">Review insight</a><a href="#sources">Data & trust</a><button class="pill" id="saveTop">Save this plan ↗</button></nav>
+  </header>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Travel, thoughtfully</div>
+      <h1>Less scrolling.<br>More <span style="color:#638771;font-style:italic">being there.</span></h1>
+      <p>A calmer way to shape your trip. Build a day-by-day plan, understand review patterns, and compare your options with clear trade-offs — not mystery scores.</p>
+      <div class="hero-actions"><button class="primary" id="startBtn">Plan a trip <span aria-hidden="true">↘</span></button><button class="secondary" id="howBtn">How it works</button></div>
+    </div>
+    <div class="hero-visual" aria-label="Decorative illustration of hills and a travel note">
+      <div class="sun"></div><div class="visual-note"><strong>Your trip, in perspective</strong><small>One thoughtful plan. Clear reasons. Your call.</small></div><div class="hill"></div><div class="hill two"></div>
+    </div>
+  </section>
+  <main>
+    <div class="section-head" id="planner"><div><div class="eyebrow">01 / Make it yours</div><h2>Start with your kind of trip</h2></div><p>Adjust the details and generate a sample plan. Live travel prices and external review feeds are not connected in this prototype.</p></div>
+    <div class="workspace">
+      <aside class="panel">
+        <h3>Your travel brief</h3><p class="sub">A few preferences help us shape the day — without over-planning it.</p>
+        <div class="field"><label for="destination">Destination</label><select id="destination"><option value="Lisbon">Lisbon, Portugal</option><option value="Paris">Paris, France</option><option value="London">London, United Kingdom</option><option value="Copenhagen">Copenhagen, Denmark</option></select></div>
+        <div class="two"><div class="field"><label for="days">Trip length</label><select id="days"><option value="2">2 days</option><option value="3" selected>3 days</option><option value="4">4 days</option><option value="5">5 days</option></select></div><div class="field"><label for="budget">Daily budget</label><select id="budget"><option value="low">Budget-minded</option><option value="mid" selected>Mid-range</option><option value="flex">Flexible</option></select></div></div>
+        <div class="field"><label>What are you into?</label><div class="chips" id="interestChips"><button type="button" class="chip" aria-pressed="true" data-interest="culture">Culture</button><button type="button" class="chip" aria-pressed="true" data-interest="food">Food & coffee</button><button type="button" class="chip" aria-pressed="false" data-interest="nature">Nature</button><button type="button" class="chip" aria-pressed="false" data-interest="shopping">Shopping</button><button type="button" class="chip" aria-pressed="false" data-interest="slow">Slow mornings</button></div></div>
+        <div class="field"><label for="pace">Preferred pace</label><select id="pace"><option value="easy">Easy — room to wander</option><option value="balanced" selected>Balanced — a bit of everything</option><option value="full">Full — make the most of it</option></select></div>
+        <div class="field"><label for="notes">Anything else? <span style="color:var(--muted);font-weight:400">(optional)</span></label><input id="notes" placeholder="e.g. avoid long queues, vegetarian" maxlength="180"></div>
+        <button class="primary full" id="generate">Generate my sample plan ↗</button>
+        <p style="font-size:10px;color:var(--muted);line-height:1.5;margin:12px 0 0">Prototype mode: the itinerary uses curated demonstration content, not a live AI call.</p>
+      </aside>
+      <section class="results">
+        <div class="result-toolbar"><div class="tabs" role="tablist" aria-label="Trip results"><button class="tab active" data-tab="plan" role="tab" aria-selected="true">Itinerary</button><button class="tab" data-tab="compare" role="tab" aria-selected="false">Compare</button><button class="tab" data-tab="reviews" role="tab" aria-selected="false">Review insight</button></div><span class="demo-label">DEMO DATA · NOT LIVE</span></div>
+        <div class="notice"><strong>Transparency note:</strong> Sample scores and itinerary suggestions demonstrate the product experience. No live hotel availability, flight fares, booking inventory, or third-party review feed is connected.</div>
+        <div id="planPanel">
+          <div class="section-head" style="margin:10px 0 14px"><div><div class="eyebrow" id="planEyebrow">YOUR SAMPLE ITINERARY</div><h2 id="planTitle" style="font-size:27px">3 days in Lisbon</h2></div><p id="planSubtitle">Culture, good coffee, and time to wander.</p></div>
+          <div class="itinerary" id="itinerary"></div>
+        </div>
+        <div id="comparePanel" class="hidden">
+          <div class="section-head" style="margin:10px 0 14px"><div><div class="eyebrow">YOUR OPTIONS</div><h2 style="font-size:27px">Compare the trade-offs</h2></div><p>Scores are illustrative until verified data sources are connected.</p></div>
+          <div class="cards" id="compareCards"></div>
+          <div class="panel" style="margin-top:12px"><h3>At a glance</h3><div style="overflow-x:auto"><table class="compare-table"><thead><tr><th>Option</th><th>Best for</th><th>Trade-off</th><th>Price status</th></tr></thead><tbody id="compareTable"></tbody></table></div></div>
+        </div>
+        <div id="reviewPanel" class="hidden">
+          <div class="section-head" style="margin:10px 0 14px"><div><div class="eyebrow">REVIEW PATTERNS</div><h2 style="font-size:27px">Read between the reviews</h2></div><p>Paste text you are permitted to use. Analysis runs locally in this demo.</p></div>
+          <div class="reviews-grid"><div class="panel"><label for="reviewText">Review text</label><textarea id="reviewText" placeholder="Paste a few reviews here, one per paragraph…">Lovely location, friendly staff and great coffee. The room was clean but a little noisy at night.
+Beautiful neighbourhood and easy to walk everywhere. Breakfast was expensive.
+Helpful staff, spotless room, but street noise woke us early.
+Good value for the location. Small room, very clean, and quiet after midnight.</textarea><button class="primary full" id="analyze">Analyze review themes</button><p style="font-size:10px;color:var(--muted);margin:10px 0 0">Do not paste private, sensitive, or copyrighted material you do not have permission to process.</p></div><div class="panel"><h3>Theme snapshot</h3><p class="sub">Counts below are simple keyword signals, not sentiment AI or verified ratings.</p><div id="analysisResults" class="analysis-results"></div></div></div>
+        </div>
+      </section>
+    </div>
+    <div class="bottom-grid" id="sources">
+      <section class="panel"><div class="eyebrow">02 / Know the source</div><h2 style="font-size:26px;margin-bottom:8px">Trust should be visible.</h2><p class="sub">The production product will label what is verified, what is user-provided, and what is generated. This prototype intentionally does not pretend to have live integrations.</p><div class="source-row"><div><strong>OpenStreetMap</strong><br><span>Potential source for place/location data</span></div><a class="small-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Explore ↗</a></div><div class="source-row"><div><strong>Amadeus for Developers</strong><br><span>Test environment for flight API evaluation</span></div><a class="small-link" href="https://developers.amadeus.com/" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Google Places</strong><br><span>Potential paid/billing-enabled integration</span></div><a class="small-link" href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Booking.com Demand API</strong><br><span>Partner access required</span></div><a class="small-link" href="https://developers.booking.com/" target="_blank" rel="noopener">Docs ↗</a></div></section>
+      <section class="panel"><div class="eyebrow">03 / The promise</div><h2 style="font-size:26px;margin-bottom:8px">Fewer tabs. Better choices.</h2><p class="sub">Tripwise AI should help you understand the why behind a recommendation — and show the uncertainty when data is missing.</p><div class="source-row"><strong>Personal fit</strong><span>Built around your preferences</span></div><div class="source-row"><strong>Review themes</strong><span>Patterns, not cherry-picked quotes</span></div><div class="source-row"><strong>Transparent comparisons</strong><span>Trade-offs and source status</span></div><div class="source-row"><strong>No made-up live prices</strong><span>Clear labels for every data type</span></div><button class="secondary full" id="feedbackBtn">Give prototype feedback</button></section>
+    </div>
+  </main>
+  <footer><div><strong>tripwise AI</strong> · A concept prototype for thoughtful travel planning.</div><div>Not a booking service. Demonstration itinerary and scores are not live offers or verified recommendations.</div></footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const destinationData = {
+  Lisbon: {
+    subtitle: 'Culture, good coffee, and time to wander.',
+    days: [
+      {title:'Old town, slowly',stops:[['09:00','Coffee & a pastry','Start easy; check opening times before you go.'],['10:30','Alfama lanes','Explore on foot and leave room for detours.'],['13:00','Local lunch stop','Choose a spot after checking current menus.'],['15:00','Castle viewpoint area','Allow time for hills and queues.']]},
+      {title:'Tiles & river air',stops:[['09:30','Tile museum or gallery','Pick one cultural anchor, not three.'],['12:00','Market lunch','Compare menus and dietary options.'],['14:00','Riverside walk','A flexible low-pressure afternoon.'],['17:00','Coffee break','Save a little time for a second café.']]},
+      {title:'A neighbourhood day',stops:[['09:30','Slow breakfast','Keep the first hour unbooked.'],['11:00','Independent shops','Browse a compact neighbourhood route.'],['13:00','Long lunch','Look for current reviews and menu prices.'],['16:00','Garden or viewpoint','End with a calm stop near transit.']]}
+    ], options:[['Walkable culture route','Culture + easy walking','Less nightlife',84],['Food-first neighbourhoods','Cafés + local food','Needs menu checks',80],['Flexible slow-trip plan','Open time + gardens','Fewer headline sights',78]]
+  },
+  Paris: {
+    subtitle: 'Museum time, neighbourhood cafés, and unhurried walks.',
+    days: [
+      {title:'Classic Paris, with pauses',stops:[['09:00','Neighbourhood café','Check opening hours and breakfast prices.'],['10:30','Museum visit','Book timed entry where required.'],['13:00','Lunch nearby','Compare menus before sitting down.'],['15:00','Garden walk','Keep the route flexible.']]},
+      {title:'Art & the river',stops:[['09:30','Small bakery breakfast','Choose a place on your actual route.'],['11:00','Gallery or museum','Avoid stacking too many timed tickets.'],['13:30','Riverside lunch','Check current menus and reviews.'],['16:00','Bookshop and coffee','A low-effort afternoon option.']]},
+      {title:'Shopping & hidden corners',stops:[['09:30','Slow start','Leave time for an unplanned discovery.'],['11:00','Independent shops','Group nearby stops to save transit time.'],['13:00','Lunch break','Use recent reviews as a cross-check.'],['15:00','A quieter neighbourhood','Finish somewhere easy to get back from.']]}
+    ], options:[['Art & landmarks','Museums + classic sights','Timed tickets may be needed',85],['Cafés & side streets','Food + neighbourhoods','Opening hours vary',82],['Shopping & slow pace','Independent shops + pauses','Less sightseeing',79]]
+  },
+  London: {
+    subtitle: 'Museums, market food, and neighbourhood wandering.',
+    days: [
+      {title:'Museum & market',stops:[['09:00','Coffee near transit','Check the first stop is open.'],['10:00','Major museum','Confirm free-entry and timed-entry rules.'],['13:00','Market lunch','Stalls and prices change by day.'],['15:00','Park or riverside','Build in time for walking.']]},
+      {title:'Neighbourhood discoveries',stops:[['09:30','Bakery breakfast','A relaxed start close to your route.'],['11:00','Independent shops','Choose one area rather than crossing town.'],['13:00','Casual lunch','Check dietary options and service hours.'],['16:00','Gallery or bookshop','A flexible afternoon stop.']]},
+      {title:'A slower London day',stops:[['09:30','Long coffee','Start without a timed booking.'],['11:00','Canal or park walk','Check weather and access.'],['13:00','Neighbourhood lunch','Use current menus for budgeting.'],['15:30','Local market','Verify market days before travelling.']]}
+    ], options:[['Museum-led London','Culture + iconic collections','Can involve queues',86],['Market & food route','Markets + casual food','Market days vary',82],['Green spaces & local life','Parks + easy walking','Fewer major landmarks',79]]
+  },
+  Copenhagen: {
+    subtitle: 'Design, waterfront walks, and considered food stops.',
+    days: [
+      {title:'Design & old streets',stops:[['09:00','Coffee and pastry','Check current opening hours.'],['10:30','Design museum area','Confirm ticket and exhibition details.'],['13:00','Casual lunch','Compare menus before choosing.'],['15:00','Old-town walk','Keep time for independent shops.']]},
+      {title:'Waterfront & neighbourhoods',stops:[['09:30','Slow breakfast','Avoid rushing across town early.'],['11:00','Harbour walk','Check weather and seasonal conditions.'],['13:00','Lunch stop','Look for current prices and menus.'],['15:00','Local design stores','Cluster nearby stops.']]},
+      {title:'Green and local',stops:[['09:30','Coffee break','Start near where you are staying.'],['11:00','Garden or park','A low-cost flexible activity.'],['13:00','Food hall or café','Check opening days and hours.'],['15:30','Quiet neighbourhood','Finish near transit.']]}
+    ], options:[['Design & architecture','Museums + design stores','Some tickets cost extra',84],['Harbour & outdoors','Waterfront + parks','Weather dependent',82],['Food & local life','Cafés + neighbourhoods','Dining can be costly',78]]
+  }
+};
+let selectedInterests = new Set(['culture','food']);
+let activeTab = 'plan';
+function showToast(msg) { const el=document.getElementById('toast'); el.textContent=msg; el.style.display='block'; clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>el.style.display='none',3200); }
+function renderPlan() {
+  const dest=document.getElementById('destination').value;
+  const count=Number(document.getElementById('days').value);
+  const pace=document.getElementById('pace').value;
+  const budget=document.getElementById('budget').value;
+  const data=destinationData[dest];
+  document.getElementById('planTitle').textContent=`${count} days in ${dest}`;
+  let pref=[];
+  if(selectedInterests.has('culture')) pref.push('culture');
+  if(selectedInterests.has('food')) pref.push('good coffee');
+  if(selectedInterests.has('nature')) pref.push('green spaces');
+  if(selectedInterests.has('shopping')) pref.push('independent shops');
+  if(selectedInterests.has('slow')) pref.push('slow mornings');
+  const note=document.getElementById('notes').value.trim();
+  document.getElementById('planSubtitle').textContent=`${pref.length?pref.join(', '):'A balanced mix'} · ${pace==='easy'?'easy pace':pace==='full'?'full days':'balanced pace'}${note?` · Note: ${note}`:''}`;
+  const root=document.getElementById('itinerary'); root.innerHTML='';
+  for(let i=0;i<count;i++) {
+    const d=data.days[i%data.days.length];
+    const card=document.createElement('article'); card.className='day';
+    const dayNo=i+1;
+    let stops=d.stops.slice();
+    if(pace==='easy') stops=stops.filter((_,idx)=>idx!==2);
+    if(pace==='full') stops.push(['18:00','Optional evening wander','Only if energy and opening hours allow.']);
+    if(budget==='low') stops=stops.map(s=>s[1].toLowerCase().includes('lunch')?[s[0],s[1], 'Look for casual menus, markets, or picnic options.']:s);
+    card.innerHTML=`<div class="day-label">Day ${dayNo}</div><h3>${d.title}</h3>`+stops.map(s=>`<div class="stop"><span class="time">${s[0]}</span><div><strong>${s[1]}</strong><small>${s[2]}</small></div></div>`).join('');
+    root.appendChild(card);
+  }
+  renderCompare();
+}
+function renderCompare() {
+ const dest=document.getElementById('destination').value, data=destinationData[dest];
+ const cards=document.getElementById('compareCards'); cards.innerHTML='';
+ const bestFor = selectedInterests.has('shopping') ? 'Shopping & local finds' : selectedInterests.has('nature') ? 'Green spaces & walking' : selectedInterests.has('food') ? 'Food & neighbourhoods' : 'Culture & discovery';
+ data.options.forEach((o,i)=>{
+   const score=Math.max(64,Math.min(96,o[3] + (i===0&&selectedInterests.has('culture')?2:0) + (i===1&&selectedInterests.has('food')?2:0) + (i===2&&selectedInterests.has('slow')?2:0)));
+   const el=document.createElement('article'); el.className='option';
+   el.innerHTML=`<div class="iconbox">${['◒','⌁','✳'][i]}</div><div><h3>${o[0]}</h3><p>${i===0?'A structured route for the main sights.':i===1?'A flexible route shaped around local stops.':'A lower-pressure plan with more breathing room.'}</p></div><div class="score"><strong>${score}</strong><span>/ 100<br>sample fit score</span></div><div class="scorebar"><span style="width:${score}%"></span></div><div><span class="tag">${i===0?'Culture':i===1?'Food & coffee':'Easy pace'}</span><span class="tag">${i===2?'Flexible':'Walkable focus'}</span></div><div class="divider"></div><p><strong>Best for:</strong> ${i===0?'landmarks and museums':i===1?bestFor:'slower travel'}<br><strong>Trade-off:</strong> ${o[2]}</p><a class="small-link" href="https://www.openstreetmap.org/search?query=${encodeURIComponent(dest)}" target="_blank" rel="noopener">Explore places on OpenStreetMap ↗</a>`;
+   cards.appendChild(el);
+ });
+ document.getElementById('compareTable').innerHTML=data.options.map((o,i)=>`<tr><td><strong>${o[0]}</strong></td><td>${o[1]}</td><td>${o[2]}</td><td><span class="tag">Not connected</span><br><span style="color:var(--muted);font-size:10px">No live price</span></td></tr>`).join('');
+}
+function setTab(tab) {
+ activeTab=tab;
+ document.querySelectorAll('.tab').forEach(b=>{const on=b.dataset.tab===tab;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});
+ document.getElementById('planPanel').classList.toggle('hidden',tab!=='plan');
+ document.getElementById('comparePanel').classList.toggle('hidden',tab!=='compare');
+ document.getElementById('reviewPanel').classList.toggle('hidden',tab!=='reviews');
+}
+function analyzeReviews() {
+ const text=document.getElementById('reviewText').value.trim();
+ if(!text){showToast('Paste a few review excerpts first.');return;}
+ const themes=[['Cleanliness',/clean|spotless|dirty|tidy|hygien|dust/gi],['Noise',/noise|noisy|quiet|loud|sound|woke/gi],['Location',/location|walk|central|near|neighbourhood|neighborhood|transit/gi],['Staff & service',/staff|friendly|helpful|service|rude/gi],['Value & cost',/value|price|expensive|cheap|cost|breakfast/gi]];
+ const blocks=text.split(/\n+/).filter(Boolean); const results=themes.map(([name,re])=>({name,count:(text.match(re)||[]).length}));
+ const root=document.getElementById('analysisResults'); root.innerHTML='';
+ results.forEach(t=>{const div=document.createElement('div');div.className='metric';div.innerHTML=`<span>${t.name}</span><strong>${t.count} signal${t.count===1?'':'s'}</strong>`;root.appendChild(div);});
+ const top=[...results].sort((a,b)=>b.count-a.count).filter(x=>x.count>0).slice(0,3).map(x=>x.name.toLowerCase());
+ const summary=document.createElement('div');summary.className='analysis-summary';
+ summary.innerHTML=`<strong>Quick read</strong><br>${blocks.length} text segment${blocks.length===1?'':'s'} provided. ${top.length?'Most-mentioned themes: '+top.join(', ')+'.':'No common theme keywords detected.'} These are keyword counts only — not verified sentiment, a source rating, or proof that a place is good or bad. Read the original context before deciding.`;
+ root.appendChild(summary);
+}
+document.querySelectorAll('.chip').forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.interest; if(selectedInterests.has(key)) selectedInterests.delete(key); else selectedInterests.add(key); btn.setAttribute('aria-pressed',String(selectedInterests.has(key)));}));
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>setTab(btn.dataset.tab)));
+document.getElementById('generate').addEventListener('click',()=>{renderPlan();setTab('plan');showToast('Your sample plan has been updated. Demo content only — no live prices.');});
+document.getElementById('analyze').addEventListener('click',analyzeReviews);
+document.getElementById('startBtn').addEventListener('click',()=>document.getElementById('planner').scrollIntoView({behavior:'smooth'}));
+document.getElementById('howBtn').addEventListener('click',()=>{document.getElementById('sources').scrollIntoView({behavior:'smooth'});showToast('Tripwise separates recommendations from verified data.');});
+document.getElementById('saveTop').addEventListener('click',()=>{const summary={destination:document.getElementById('destination').value,days:document.getElementById('days').value,budget:document.getElementById('budget').value,interests:[...selectedInterests],pace:document.getElementById('pace').value}; const blob=new Blob([JSON.stringify(summary,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='tripwise-sample-plan.json';a.click();URL.revokeObjectURL(url);showToast('Your trip preferences were downloaded as a JSON file.');});
+document.getElementById('feedbackBtn').addEventListener('click',()=>{const message=prompt('What should Tripwise AI do better? Your feedback stays in this prototype and is not sent anywhere.');if(message&&message.trim())showToast('Thanks — this prototype does not transmit feedback yet.');});
+renderPlan(); analyzeReviews();
+</script>
+</body>
+</html>
