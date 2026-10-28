@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- TRIPWISE_AI_V3_RELEASE_PLACE_EXPLORER -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -125,6 +126,21 @@ footer strong { color:inherit; }
 .plan-actions button { padding:10px 12px; font-size:11px; }
 .match-label { display:inline-block; color:#37694e; background:#e7f1e8; border-radius:5px; padding:3px 5px; font-size:9px; line-height:1.2; margin:4px 3px 0 0; font-weight:750; }
 .status-note { margin-top:12px; font-size:10px; line-height:1.5; color:var(--muted); }
+
+.places-section { margin-top:22px; }
+.places-tools { display:grid; grid-template-columns:minmax(180px,1fr) auto; gap:10px; align-items:end; margin-top:16px; }
+.places-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:16px; }
+.place-card { min-width:0; border:1px solid var(--line); border-radius:14px; padding:14px; background:light-dark(#fffefa,#18221c); }
+.place-card h3 { font-size:13px; margin:0 0 7px; line-height:1.4; overflow-wrap:anywhere; }
+.place-card p { color:var(--muted); font-size:11px; line-height:1.5; margin:0 0 10px; }
+.place-meta { font-size:10px; color:var(--muted); margin-bottom:10px; }
+.place-status { margin-top:14px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; color:var(--muted); font-size:12px; line-height:1.55; }
+.place-status.error { border-color:#e8d5b4; background:light-dark(#fff7e9,#30271b); color:light-dark(#765322,#efd6aa); }
+.place-attribution { margin-top:12px; color:var(--muted); font-size:10px; line-height:1.55; }
+.place-attribution a { color:inherit; }
+@media (max-width:900px) { .places-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:650px) { .places-tools { grid-template-columns:1fr; } .places-grid { grid-template-columns:1fr; } .places-tools .primary { width:100%; } }
+
 @media (max-width:650px) { .trip-details { grid-template-columns:1fr; } .plan-actions button { flex:1 1 135px; } }
 @media print {
   body, #app { background:#fff !important; color:#111 !important; }
@@ -199,9 +215,21 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
         </div>
       </section>
     </div>
+    <section class="panel places-section" id="realPlaces">
+      <div class="eyebrow">02 / Explore real places</div>
+      <h2 style="font-size:26px;margin-bottom:8px">From the map to your shortlist.</h2>
+      <p class="sub">Look up real OpenStreetMap places near the selected city centre. These are map records, not verified ratings, opening hours, recommendations, or booking availability.</p>
+      <div class="places-tools">
+        <div class="field" style="margin:0"><label for="placeCategory">What would you like to find?</label><select id="placeCategory"><option value="cafes">Cafés</option><option value="museums">Museums</option><option value="parks">Parks & gardens</option><option value="shopping">Shops</option></select></div>
+        <button class="primary" id="findPlaces">Find real places ↗</button>
+      </div>
+      <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. This makes one small, on-demand query; results may be limited if the public service is busy.</div>
+      <div id="placesResults" class="places-grid" aria-live="polite"></div>
+      <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Public services are community-run and may be rate-limited. Verify details with the venue before visiting.</p>
+    </section>
     <div class="bottom-grid" id="sources">
-      <section class="panel"><div class="eyebrow">02 / Know the source</div><h2 style="font-size:26px;margin-bottom:8px">Trust should be visible.</h2><p class="sub">The production product will label what is verified, what is user-provided, and what is generated. This prototype intentionally does not pretend to have live integrations.</p><div class="source-row"><div><strong>OpenStreetMap</strong><br><span>Potential source for place/location data</span></div><a class="small-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Explore ↗</a></div><div class="source-row"><div><strong>Amadeus for Developers</strong><br><span>Test environment for flight API evaluation</span></div><a class="small-link" href="https://developers.amadeus.com/" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Google Places</strong><br><span>Potential paid/billing-enabled integration</span></div><a class="small-link" href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Booking.com Demand API</strong><br><span>Partner access required</span></div><a class="small-link" href="https://developers.booking.com/" target="_blank" rel="noopener">Docs ↗</a></div></section>
-      <section class="panel"><div class="eyebrow">03 / The promise</div><h2 style="font-size:26px;margin-bottom:8px">Fewer tabs. Better choices.</h2><p class="sub">Tripwise AI should help you understand the why behind a recommendation — and show the uncertainty when data is missing.</p><div class="source-row"><strong>Personal fit</strong><span>Built around your preferences</span></div><div class="source-row"><strong>Review themes</strong><span>Patterns, not cherry-picked quotes</span></div><div class="source-row"><strong>Transparent comparisons</strong><span>Trade-offs and source status</span></div><div class="source-row"><strong>No made-up live prices</strong><span>Clear labels for every data type</span></div><button class="secondary full" id="feedbackBtn">Give prototype feedback</button></section>
+      <section class="panel"><div class="eyebrow">03 / Know the source</div><h2 style="font-size:26px;margin-bottom:8px">Trust should be visible.</h2><p class="sub">The production product will label what is verified, what is user-provided, and what is generated. This prototype intentionally does not pretend to have live integrations.</p><div class="source-row"><div><strong>OpenStreetMap</strong><br><span>Potential source for place/location data</span></div><a class="small-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Explore ↗</a></div><div class="source-row"><div><strong>Amadeus for Developers</strong><br><span>Test environment for flight API evaluation</span></div><a class="small-link" href="https://developers.amadeus.com/" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Google Places</strong><br><span>Potential paid/billing-enabled integration</span></div><a class="small-link" href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Booking.com Demand API</strong><br><span>Partner access required</span></div><a class="small-link" href="https://developers.booking.com/" target="_blank" rel="noopener">Docs ↗</a></div></section>
+      <section class="panel"><div class="eyebrow">04 / The promise</div><h2 style="font-size:26px;margin-bottom:8px">Fewer tabs. Better choices.</h2><p class="sub">Tripwise AI should help you understand the why behind a recommendation — and show the uncertainty when data is missing.</p><div class="source-row"><strong>Personal fit</strong><span>Built around your preferences</span></div><div class="source-row"><strong>Review themes</strong><span>Patterns, not cherry-picked quotes</span></div><div class="source-row"><strong>Transparent comparisons</strong><span>Trade-offs and source status</span></div><div class="source-row"><strong>No made-up live prices</strong><span>Clear labels for every data type</span></div><button class="secondary full" id="feedbackBtn">Give prototype feedback</button></section>
     </div>
   </main>
   <footer><div><strong>tripwise AI</strong> · A concept prototype for thoughtful travel planning.</div><div>Not a booking service. Demonstration itinerary and scores are not live offers or verified recommendations.</div></footer>
@@ -245,6 +273,105 @@ const destinationData = {
 let selectedInterests = new Set(['culture','food']);
 let activeTab = 'plan';
 function showToast(msg) { const el=document.getElementById('toast'); el.textContent=msg; el.style.display='block'; clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>el.style.display='none',3200); }
+
+const cityCentres = {
+  Lisbon: {lat:38.7223, lon:-9.1393},
+  Paris: {lat:48.8566, lon:2.3522},
+  London: {lat:51.5072, lon:-0.1276},
+  Copenhagen: {lat:55.6761, lon:12.5683}
+};
+const placeCategories = {
+  cafes: {label:'Café', filter:'["amenity"="cafe"]'},
+  museums: {label:'Museum', filter:'["tourism"="museum"]'},
+  parks: {label:'Park or garden', filter:'["leisure"="park"]'},
+  shopping: {label:'Shop', filter:'["shop"]'}
+};
+function setPlacesStatus(message, isError=false) {
+  const status=document.getElementById('placesStatus');
+  status.textContent=message;
+  status.classList.toggle('error',isError);
+}
+function placeCacheKey(city, category) { return `tripwise-osm-places-v1-${city}-${category}`; }
+function safeText(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function renderPlaceCards(elements, city, category) {
+  const root=document.getElementById('placesResults');
+  root.replaceChildren();
+  const seen=new Set();
+  const usable=elements.map(el=>{
+    const tags=el.tags||{};
+    const name=tags.name||tags['name:en']||tags.brand||'';
+    const lat=el.lat ?? el.center?.lat;
+    const lon=el.lon ?? el.center?.lon;
+    if(!name || !Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+    const key=`${name.toLowerCase()}-${lat.toFixed(5)}-${lon.toFixed(5)}`;
+    if(seen.has(key)) return null;
+    seen.add(key);
+    const categoryLabel=placeCategories[category]?.label || 'Place';
+    const detail=tags.cuisine || tags['addr:street'] || tags.operator || tags.brand || categoryLabel;
+    const mapUrl=`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=17/${lat}/${lon}`;
+    return {name,detail,lat,lon,mapUrl,categoryLabel};
+  }).filter(Boolean).slice(0,24);
+  if(!usable.length) {
+    setPlacesStatus(`No named ${placeCategories[category].label.toLowerCase()} records were returned near central ${city}. Try another category or try again later.`);
+    return;
+  }
+  usable.forEach(place=>{
+    const card=document.createElement('article'); card.className='place-card';
+    const h=document.createElement('h3'); const a=document.createElement('a');
+    a.href=place.mapUrl; a.target='_blank'; a.rel='noopener'; a.textContent=place.name; a.className='small-link'; h.appendChild(a);
+    const meta=document.createElement('div'); meta.className='place-meta'; meta.textContent=place.categoryLabel;
+    const p=document.createElement('p'); p.textContent=place.detail;
+    const link=document.createElement('a'); link.href=place.mapUrl; link.target='_blank'; link.rel='noopener'; link.className='small-link'; link.textContent='Open on OpenStreetMap ↗';
+    card.append(h,meta,p,link); root.appendChild(card);
+  });
+  setPlacesStatus(`${usable.length} map place${usable.length===1?'':'s'} found near central ${city}. Map records only: no ratings, opening hours, or current availability were verified.`);
+}
+async function findRealPlaces() {
+  const button=document.getElementById('findPlaces');
+  const city=document.getElementById('destination').value;
+  const category=document.getElementById('placeCategory').value;
+  const centre=cityCentres[city];
+  if(!centre || !placeCategories[category]) { setPlacesStatus('Choose a supported destination and category first.',true); return; }
+  const cacheKey=placeCacheKey(city,category);
+  try {
+    const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
+    if(cached && Array.isArray(cached.elements) && Date.now()-cached.savedAt < 6*60*60*1000) {
+      renderPlaceCards(cached.elements,city,category);
+      showToast('Showing cached OpenStreetMap results.');
+      return;
+    }
+  } catch(e) { /* ignore an unavailable or invalid cache */ }
+  const oldText=button.textContent;
+  button.disabled=true; button.textContent='Searching…';
+  document.getElementById('placesResults').replaceChildren();
+  setPlacesStatus(`Searching OpenStreetMap data for ${placeCategories[category].label.toLowerCase()} near central ${city}…`);
+  const query=`[out:json][timeout:20];nwr(around:4500,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 30;`;
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),25000);
+  try {
+    const response=await fetch('https://overpass-api.de/api/interpreter',{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+      body:new URLSearchParams({data:query}),
+      signal:controller.signal
+    });
+    if(!response.ok) throw new Error(`Map data service returned HTTP ${response.status}.`);
+    const data=await response.json();
+    const elements=Array.isArray(data.elements)?data.elements:[];
+    try { localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),elements})); } catch(e) { /* cache is optional */ }
+    renderPlaceCards(elements,city,category);
+  } catch(error) {
+    const message=error.name==='AbortError'
+      ? 'The map service took too long to respond. Please try again later.'
+      : 'Live place lookup is temporarily unavailable. The public community service may be busy or your network may block the request. Try again later.';
+    setPlacesStatus(message,true);
+  } finally {
+    clearTimeout(timeout); button.disabled=false; button.textContent=oldText;
+  }
+}
+
 function formatDate(dateString, options={weekday:'short',day:'numeric',month:'short'}) {
   if(!dateString) return '';
   const d=new Date(dateString+'T12:00:00');
@@ -437,6 +564,7 @@ function exportItinerary() {
   downloadFile(`tripwise-${p.destination.toLowerCase()}-itinerary.md`,md,'text/markdown;charset=utf-8');
   showToast('Your itinerary was downloaded as a Markdown file.');
 }
+document.getElementById('findPlaces').addEventListener('click',findRealPlaces);
 document.getElementById('saveTop').addEventListener('click',exportPreferences);
 document.getElementById('exportPlan').addEventListener('click',exportItinerary);
 document.getElementById('printPlan').addEventListener('click',()=>{renderPlan();setTab('plan');window.print();});
