@@ -1,6 +1,7 @@
 <!doctype html>
 <!-- TRIPWISE_AI_V3_RELEASE_PLACE_EXPLORER -->
 <!-- TRIPWISE_AI_V3_1_MAP_FALLBACK -->
+<!-- TRIPWISE_AI_V3_2_THIRD_SERVER_MANUAL_FALLBACK -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -139,6 +140,7 @@ footer strong { color:inherit; }
 .place-status.error { border-color:#e8d5b4; background:light-dark(#fff7e9,#30271b); color:light-dark(#765322,#efd6aa); }
 .place-attribution { margin-top:12px; color:var(--muted); font-size:10px; line-height:1.55; }
 .place-attribution a { color:inherit; }
+.place-fallback-link { display:inline-flex; margin:10px 10px 0 0; padding:9px 12px; border:1px solid var(--line); border-radius:10px; color:var(--site-primary); background:var(--paper); font-size:12px; font-weight:700; text-decoration:none; }
 @media (max-width:900px) { .places-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:650px) { .places-tools { grid-template-columns:1fr; } .places-grid { grid-template-columns:1fr; } .places-tools .primary { width:100%; } }
 
@@ -225,6 +227,7 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
         <button class="primary" id="findPlaces">Find real places ↗</button>
       </div>
       <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. The search checks a 2.5 km radius and automatically tries a backup public map server if the first is busy.</div>
+      <a id="placesFallbackLink" class="place-fallback-link hidden" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Open a manual map search ↗</a>
       <div id="placesResults" class="places-grid" aria-live="polite"></div>
       <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Public services are community-run and may be rate-limited. Verify details with the venue before visiting.</p>
     </section>
@@ -347,21 +350,25 @@ async function findRealPlaces() {
   const oldText=button.textContent;
   button.disabled=true; button.textContent='Searching…';
   document.getElementById('placesResults').replaceChildren();
+  const fallbackLink=document.getElementById('placesFallbackLink');
+  fallbackLink.classList.add('hidden');
+  fallbackLink.href='https://www.openstreetmap.org/';
   setPlacesStatus(`Searching OpenStreetMap data for ${placeCategories[category].label.toLowerCase()} near central ${city}…`);
-  // V3.1: smaller query plus sequential public-server fallback. These are best-effort community services.
-  const query=`[out:json][timeout:12];nwr(around:2500,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 15;`;
+  // V3.2: sequential best-effort requests to three public Overpass instances, with a manual map-search fallback.
+  const query=`[out:json][timeout:9];nwr(around:2000,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 10;`;
   const endpoints=[
     'https://overpass-api.de/api/interpreter',
-    'https://overpass.private.coffee/api/interpreter'
+    'https://overpass.private.coffee/api/interpreter',
+    'https://maps.mail.ru/osm/tools/overpass/api/interpreter'
   ];
   let data=null;
   let lastError=null;
   try {
     for(let i=0;i<endpoints.length;i++) {
       const controller=new AbortController();
-      const timeout=setTimeout(()=>controller.abort(),14000);
+      const timeout=setTimeout(()=>controller.abort(),10000);
       try {
-        if(i>0) setPlacesStatus('The first public map server is busy. Trying a backup server…');
+        if(i>0) setPlacesStatus(`Map server ${i} did not respond. Trying backup ${i+1} of ${endpoints.length}…`);
         const response=await fetch(endpoints[i],{
           method:'POST',
           headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -388,8 +395,11 @@ async function findRealPlaces() {
     }
     renderPlaceCards(elements,city,category);
   } catch(error) {
-    const message='Both public map services failed to respond. This is a temporary community-service issue, not a problem with your Tripwise AI account. Wait a little and try again.';
-    setPlacesStatus(message,true);
+    setPlacesStatus('The public live map-data services did not respond in time. This is not a problem with your Tripwise AI account. You can still open a manual place search on OpenStreetMap below.',true);
+    const searchTerm=({cafes:'cafes',museums:'museums',parks:'parks',shopping:'shops'})[category] || placeCategories[category].label.toLowerCase();
+    fallbackLink.href=`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${searchTerm} near ${city}`)}`;
+    fallbackLink.textContent=`Search for ${searchTerm} near ${city} on OpenStreetMap ↗`;
+    fallbackLink.classList.remove('hidden');
   } finally {
     button.disabled=false; button.textContent=oldText;
   }
