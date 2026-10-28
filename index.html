@@ -1,5 +1,6 @@
 <!doctype html>
 <!-- TRIPWISE_AI_V3_RELEASE_PLACE_EXPLORER -->
+<!-- TRIPWISE_AI_V3_1_MAP_FALLBACK -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -223,7 +224,7 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
         <div class="field" style="margin:0"><label for="placeCategory">What would you like to find?</label><select id="placeCategory"><option value="cafes">Cafés</option><option value="museums">Museums</option><option value="parks">Parks & gardens</option><option value="shopping">Shops</option></select></div>
         <button class="primary" id="findPlaces">Find real places ↗</button>
       </div>
-      <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. This makes one small, on-demand query; results may be limited if the public service is busy.</div>
+      <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. The search checks a 2.5 km radius and automatically tries a backup public map server if the first is busy.</div>
       <div id="placesResults" class="places-grid" aria-live="polite"></div>
       <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Public services are community-run and may be rate-limited. Verify details with the venue before visiting.</p>
     </section>
@@ -347,28 +348,50 @@ async function findRealPlaces() {
   button.disabled=true; button.textContent='Searching…';
   document.getElementById('placesResults').replaceChildren();
   setPlacesStatus(`Searching OpenStreetMap data for ${placeCategories[category].label.toLowerCase()} near central ${city}…`);
-  const query=`[out:json][timeout:20];nwr(around:4500,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 30;`;
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),25000);
+  // V3.1: smaller query plus sequential public-server fallback. These are best-effort community services.
+  const query=`[out:json][timeout:12];nwr(around:2500,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 15;`;
+  const endpoints=[
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.private.coffee/api/interpreter'
+  ];
+  let data=null;
+  let lastError=null;
   try {
-    const response=await fetch('https://overpass-api.de/api/interpreter',{
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
-      body:new URLSearchParams({data:query}),
-      signal:controller.signal
-    });
-    if(!response.ok) throw new Error(`Map data service returned HTTP ${response.status}.`);
-    const data=await response.json();
-    const elements=Array.isArray(data.elements)?data.elements:[];
-    try { localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),elements})); } catch(e) { /* cache is optional */ }
+    for(let i=0;i<endpoints.length;i++) {
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),14000);
+      try {
+        if(i>0) setPlacesStatus('The first public map server is busy. Trying a backup server…');
+        const response=await fetch(endpoints[i],{
+          method:'POST',
+          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+          body:new URLSearchParams({data:query}),
+          signal:controller.signal
+        });
+        if(!response.ok) throw new Error(`Map data service returned HTTP ${response.status}.`);
+        const payload=await response.json();
+        if(payload.remark) throw new Error(payload.remark);
+        if(!Array.isArray(payload.elements)) throw new Error('Unexpected map response.');
+        data=payload;
+        break;
+      } catch(error) {
+        lastError=error;
+      } finally {
+        clearTimeout(timeout);
+      }
+    }
+    if(!data) throw lastError || new Error('No public map server responded.');
+    const elements=data.elements;
+    // Cache non-empty results only, so an empty/temporary response doesn't block a later retry.
+    if(elements.length) {
+      try { localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),elements})); } catch(e) { /* cache is optional */ }
+    }
     renderPlaceCards(elements,city,category);
   } catch(error) {
-    const message=error.name==='AbortError'
-      ? 'The map service took too long to respond. Please try again later.'
-      : 'Live place lookup is temporarily unavailable. The public community service may be busy or your network may block the request. Try again later.';
+    const message='Both public map services failed to respond. This is a temporary community-service issue, not a problem with your Tripwise AI account. Wait a little and try again.';
     setPlacesStatus(message,true);
   } finally {
-    clearTimeout(timeout); button.disabled=false; button.textContent=oldText;
+    button.disabled=false; button.textContent=oldText;
   }
 }
 
