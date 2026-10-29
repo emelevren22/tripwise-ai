@@ -2,6 +2,7 @@
 <!-- TRIPWISE_AI_V3_RELEASE_PLACE_EXPLORER -->
 <!-- TRIPWISE_AI_V3_1_MAP_FALLBACK -->
 <!-- TRIPWISE_AI_V3_2_THIRD_SERVER_MANUAL_FALLBACK -->
+<!-- TRIPWISE_AI_V3_3_CLOUDFLARE_WORKER -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -226,10 +227,10 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
         <div class="field" style="margin:0"><label for="placeCategory">What would you like to find?</label><select id="placeCategory"><option value="cafes">Cafés</option><option value="museums">Museums</option><option value="parks">Parks & gardens</option><option value="shopping">Shops</option></select></div>
         <button class="primary" id="findPlaces">Find real places ↗</button>
       </div>
-      <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. The search checks a 2.5 km radius and automatically tries a backup public map server if the first is busy.</div>
+      <div id="placesStatus" class="place-status" role="status" aria-live="polite">Choose a category and press “Find real places”. The search uses our Cloudflare place service for OpenStreetMap records near the selected city centre.</div>
       <a id="placesFallbackLink" class="place-fallback-link hidden" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Open a manual map search ↗</a>
       <div id="placesResults" class="places-grid" aria-live="polite"></div>
-      <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Public services are community-run and may be rate-limited. Verify details with the venue before visiting.</p>
+      <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Live searches use the Tripwise AI Cloudflare service and may be rate-limited. Verify details with the venue before visiting.</p>
     </section>
     <div class="bottom-grid" id="sources">
       <section class="panel"><div class="eyebrow">03 / Know the source</div><h2 style="font-size:26px;margin-bottom:8px">Trust should be visible.</h2><p class="sub">The production product will label what is verified, what is user-provided, and what is generated. This prototype intentionally does not pretend to have live integrations.</p><div class="source-row"><div><strong>OpenStreetMap</strong><br><span>Potential source for place/location data</span></div><a class="small-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Explore ↗</a></div><div class="source-row"><div><strong>Amadeus for Developers</strong><br><span>Test environment for flight API evaluation</span></div><a class="small-link" href="https://developers.amadeus.com/" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Google Places</strong><br><span>Potential paid/billing-enabled integration</span></div><a class="small-link" href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Booking.com Demand API</strong><br><span>Partner access required</span></div><a class="small-link" href="https://developers.booking.com/" target="_blank" rel="noopener">Docs ↗</a></div></section>
@@ -336,9 +337,13 @@ async function findRealPlaces() {
   const button=document.getElementById('findPlaces');
   const city=document.getElementById('destination').value;
   const category=document.getElementById('placeCategory').value;
-  const centre=cityCentres[city];
-  if(!centre || !placeCategories[category]) { setPlacesStatus('Choose a supported destination and category first.',true); return; }
+  if(!cityCentres[city] || !placeCategories[category]) {
+    setPlacesStatus('Choose a supported destination and category first.',true);
+    return;
+  }
   const cacheKey=placeCacheKey(city,category);
+  const fallbackLink=document.getElementById('placesFallbackLink');
+  fallbackLink.classList.add('hidden');
   try {
     const cached=JSON.parse(localStorage.getItem(cacheKey)||'null');
     if(cached && Array.isArray(cached.elements) && Date.now()-cached.savedAt < 6*60*60*1000) {
@@ -346,62 +351,37 @@ async function findRealPlaces() {
       showToast('Showing cached OpenStreetMap results.');
       return;
     }
-  } catch(e) { /* ignore an unavailable or invalid cache */ }
+  } catch(e) { /* cache is optional */ }
   const oldText=button.textContent;
-  button.disabled=true; button.textContent='Searching…';
+  button.disabled=true;
+  button.textContent='Searching…';
   document.getElementById('placesResults').replaceChildren();
-  const fallbackLink=document.getElementById('placesFallbackLink');
-  fallbackLink.classList.add('hidden');
-  fallbackLink.href='https://www.openstreetmap.org/';
-  setPlacesStatus(`Searching OpenStreetMap data for ${placeCategories[category].label.toLowerCase()} near central ${city}…`);
-  // V3.2: sequential best-effort requests to three public Overpass instances, with a manual map-search fallback.
-  const query=`[out:json][timeout:9];nwr(around:2000,${centre.lat},${centre.lon})${placeCategories[category].filter};out center tags 10;`;
-  const endpoints=[
-    'https://overpass-api.de/api/interpreter',
-    'https://overpass.private.coffee/api/interpreter',
-    'https://maps.mail.ru/osm/tools/overpass/api/interpreter'
-  ];
-  let data=null;
-  let lastError=null;
+  setPlacesStatus(`Searching real OpenStreetMap places near central ${city}…`);
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),25000);
   try {
-    for(let i=0;i<endpoints.length;i++) {
-      const controller=new AbortController();
-      const timeout=setTimeout(()=>controller.abort(),10000);
-      try {
-        if(i>0) setPlacesStatus(`Map server ${i} did not respond. Trying backup ${i+1} of ${endpoints.length}…`);
-        const response=await fetch(endpoints[i],{
-          method:'POST',
-          headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
-          body:new URLSearchParams({data:query}),
-          signal:controller.signal
-        });
-        if(!response.ok) throw new Error(`Map data service returned HTTP ${response.status}.`);
-        const payload=await response.json();
-        if(payload.remark) throw new Error(payload.remark);
-        if(!Array.isArray(payload.elements)) throw new Error('Unexpected map response.');
-        data=payload;
-        break;
-      } catch(error) {
-        lastError=error;
-      } finally {
-        clearTimeout(timeout);
-      }
+    const params=new URLSearchParams({city,category});
+    const response=await fetch(`https://tripwise-ai-api.emelevren22.workers.dev/places?${params}`,{
+      method:'GET',signal:controller.signal
+    });
+    if(!response.ok) throw new Error(`Place service returned HTTP ${response.status}.`);
+    const payload=await response.json();
+    if(!Array.isArray(payload.elements)) throw new Error('Unexpected place response.');
+    if(payload.elements.length) {
+      try { localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),elements:payload.elements})); }
+      catch(e) { /* cache is optional */ }
     }
-    if(!data) throw lastError || new Error('No public map server responded.');
-    const elements=data.elements;
-    // Cache non-empty results only, so an empty/temporary response doesn't block a later retry.
-    if(elements.length) {
-      try { localStorage.setItem(cacheKey,JSON.stringify({savedAt:Date.now(),elements})); } catch(e) { /* cache is optional */ }
-    }
-    renderPlaceCards(elements,city,category);
+    renderPlaceCards(payload.elements,city,category);
   } catch(error) {
-    setPlacesStatus('The public live map-data services did not respond in time. This is not a problem with your Tripwise AI account. You can still open a manual place search on OpenStreetMap below.',true);
-    const searchTerm=({cafes:'cafes',museums:'museums',parks:'parks',shopping:'shops'})[category] || placeCategories[category].label.toLowerCase();
+    setPlacesStatus('Live place search is temporarily unavailable. You can still search OpenStreetMap manually below.',true);
+    const searchTerm=({cafes:'cafes',museums:'museums',parks:'parks',shopping:'shops'})[category];
     fallbackLink.href=`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${searchTerm} near ${city}`)}`;
     fallbackLink.textContent=`Search for ${searchTerm} near ${city} on OpenStreetMap ↗`;
     fallbackLink.classList.remove('hidden');
   } finally {
-    button.disabled=false; button.textContent=oldText;
+    clearTimeout(timer);
+    button.disabled=false;
+    button.textContent=oldText;
   }
 }
 
