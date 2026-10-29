@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- TRIPWISE_AI_V3_4_SHORTLIST -->
 <!-- TRIPWISE_AI_V3_RELEASE_PLACE_EXPLORER -->
 <!-- TRIPWISE_AI_V3_1_MAP_FALLBACK -->
 <!-- TRIPWISE_AI_V3_2_THIRD_SERVER_MANUAL_FALLBACK -->
@@ -163,6 +164,10 @@ footer strong { color:inherit; }
 @media (max-width:900px) { .hero { grid-template-columns:1fr; padding-top:38px; } .hero-visual { min-height:245px; } .workspace { grid-template-columns:1fr; } .cards { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 @media (max-width:650px) { .topbar { height:62px; padding:0 17px; } .nav a { display:none; } .nav { gap:8px; } .hero { padding:34px 17px 26px; gap:24px; } h1 { font-size:42px; } main { padding:0 17px 42px; } .section-head { align-items:start; flex-direction:column; } .cards,.itinerary { grid-template-columns:1fr; } .option { display:grid; grid-template-columns:42px 1fr; column-gap:9px; } .option .iconbox { grid-row:span 2; } .option .score,.option .scorebar,.option .tag,.option .small-link { grid-column:2; } .result-toolbar { align-items:start; flex-direction:column; } .tabs { width:100%; } .tab { flex:1; padding:9px 6px; } .reviews-grid,.bottom-grid { grid-template-columns:1fr; } footer { padding:22px 17px; flex-direction:column; } .panel { padding:17px; } .sun { right:18px; width:135px; height:135px; } .visual-note { width:190px; } }
 @media (prefers-color-scheme: dark) { .notice { border-color:#5e4b2c; } }
+ .save-place { margin-top:10px; width:100%; padding:9px 10px; border:1px solid #b5cdbb; border-radius:9px; background:var(--site-secondary); color:var(--site-on-secondary); font-size:12px; font-weight:700; }
+ .save-place.saved { background:transparent; border-color:var(--line); color:inherit; }
+ .shortlist-actions { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+ .shortlist-actions button { font-size:12px; padding:9px 12px; }
 </style>
 </head>
 <body>
@@ -231,6 +236,14 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
       <a id="placesFallbackLink" class="place-fallback-link hidden" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Open a manual map search ↗</a>
       <div id="placesResults" class="places-grid" aria-live="polite"></div>
       <p class="place-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> · <a href="https://wiki.openstreetmap.org/wiki/Overpass_API" target="_blank" rel="noopener">Overpass API</a>. Live searches use the Tripwise AI Cloudflare service and may be rate-limited. Verify details with the venue before visiting.</p>
+    </section>
+    <section class="panel places-section" id="myShortlist">
+      <div class="eyebrow">03 / My trip shortlist</div>
+      <h2 style="font-size:26px;margin-bottom:8px">Places worth keeping.</h2>
+      <p class="sub">Save real map places while exploring. Your shortlist stays in this browser on this device, not in an online account. Download a copy for safekeeping.</p>
+      <div class="shortlist-actions"><button class="secondary" id="downloadShortlist">Download shortlist (.json) ↓</button><button class="secondary" id="clearShortlist">Clear shortlist</button></div>
+      <div id="shortlistStatus" class="place-status" role="status" aria-live="polite">No saved places yet.</div>
+      <div id="shortlistResults" class="places-grid"></div>
     </section>
     <div class="bottom-grid" id="sources">
       <section class="panel"><div class="eyebrow">03 / Know the source</div><h2 style="font-size:26px;margin-bottom:8px">Trust should be visible.</h2><p class="sub">The production product will label what is verified, what is user-provided, and what is generated. This prototype intentionally does not pretend to have live integrations.</p><div class="source-row"><div><strong>OpenStreetMap</strong><br><span>Potential source for place/location data</span></div><a class="small-link" href="https://www.openstreetmap.org/" target="_blank" rel="noopener">Explore ↗</a></div><div class="source-row"><div><strong>Amadeus for Developers</strong><br><span>Test environment for flight API evaluation</span></div><a class="small-link" href="https://developers.amadeus.com/" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Google Places</strong><br><span>Potential paid/billing-enabled integration</span></div><a class="small-link" href="https://developers.google.com/maps/documentation/places/web-service/overview" target="_blank" rel="noopener">Docs ↗</a></div><div class="source-row"><div><strong>Booking.com Demand API</strong><br><span>Partner access required</span></div><a class="small-link" href="https://developers.booking.com/" target="_blank" rel="noopener">Docs ↗</a></div></section>
@@ -328,10 +341,49 @@ function renderPlaceCards(elements, city, category) {
     a.href=place.mapUrl; a.target='_blank'; a.rel='noopener'; a.textContent=place.name; a.className='small-link'; h.appendChild(a);
     const meta=document.createElement('div'); meta.className='place-meta'; meta.textContent=place.categoryLabel;
     const p=document.createElement('p'); p.textContent=place.detail;
+    const save=document.createElement('button'); save.type='button'; save.className='save-place';
+    const savedPlace={...place,city,category};
+    save.dataset.placeId=savedPlaceId(savedPlace);
+    const updateSave=()=>{const saved=isPlaceSaved(savedPlace);save.textContent=saved?'♥ Saved — remove':'♡ Save to my trip';save.classList.toggle('saved',saved);};
+    save.addEventListener('click',()=>{toggleSavedPlace(savedPlace);updateSave();}); updateSave();
     const link=document.createElement('a'); link.href=place.mapUrl; link.target='_blank'; link.rel='noopener'; link.className='small-link'; link.textContent='Open on OpenStreetMap ↗';
-    card.append(h,meta,p,link); root.appendChild(card);
+    card.append(h,meta,p,link,save); root.appendChild(card);
   });
   setPlacesStatus(`${usable.length} map place${usable.length===1?'':'s'} found near central ${city}. Map records only: no ratings, opening hours, or current availability were verified.`);
+}
+const shortlistStorageKey='tripwise-shortlist-v1';
+function savedPlaceId(place) { return `${place.city}:${place.name.toLowerCase()}:${Number(place.lat).toFixed(5)}:${Number(place.lon).toFixed(5)}`; }
+function loadShortlist() {
+  try { const data=JSON.parse(localStorage.getItem(shortlistStorageKey)||'[]');return Array.isArray(data)?data.filter(p=>p&&typeof p.name==='string'&&Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&typeof p.city==='string').slice(0,250):[]; }
+  catch(e) { return []; }
+}
+let shortlist=loadShortlist();
+function isPlaceSaved(place) { return shortlist.some(p=>savedPlaceId(p)===savedPlaceId(place)); }
+function saveShortlist() {
+  try {localStorage.setItem(shortlistStorageKey,JSON.stringify(shortlist));return true;}
+  catch(e) {showToast('Could not save in this browser. Download your shortlist instead.');return false;}
+}
+function toggleSavedPlace(place) {
+  const id=savedPlaceId(place), index=shortlist.findIndex(p=>savedPlaceId(p)===id);
+  if(index>=0) shortlist.splice(index,1);
+  else if(shortlist.length<250) shortlist.push(place);
+  else {showToast('Shortlist limit reached (250 places).');return;}
+  saveShortlist();renderShortlist();
+  showToast(index>=0?'Removed from your shortlist.':'Place saved to your shortlist.');
+}
+function renderShortlist() {
+  const root=document.getElementById('shortlistResults');root.replaceChildren();
+  document.getElementById('shortlistStatus').textContent=shortlist.length?`${shortlist.length} saved place${shortlist.length===1?'':'s'} · stored in this browser only.`:'No saved places yet. Explore real places and tap “Save to my trip”.';
+  shortlist.forEach(place=>{
+    const card=document.createElement('article');card.className='place-card';
+    const title=document.createElement('h3');title.textContent=place.name;
+    const info=document.createElement('p');info.textContent=`${place.city} · ${place.categoryLabel||'Place'}`;
+    const map=document.createElement('a');map.className='small-link';map.textContent='Open on OpenStreetMap ↗';map.target='_blank';map.rel='noopener';
+    map.href=`https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lon}#map=17/${place.lat}/${place.lon}`;
+    const remove=document.createElement('button');remove.type='button';remove.className='save-place saved';remove.textContent='Remove from shortlist';
+    remove.addEventListener('click',()=>{toggleSavedPlace(place);document.querySelectorAll('#placesResults .save-place').forEach(b=>{if(b.dataset.placeId===savedPlaceId(place)){b.textContent='♡ Save to my trip';b.classList.remove('saved');}});});
+    card.append(title,info,map,remove);root.appendChild(card);
+  });
 }
 async function findRealPlaces() {
   const button=document.getElementById('findPlaces');
@@ -578,12 +630,22 @@ function exportItinerary() {
   showToast('Your itinerary was downloaded as a Markdown file.');
 }
 document.getElementById('findPlaces').addEventListener('click',findRealPlaces);
+document.getElementById('downloadShortlist').addEventListener('click',()=>{
+  downloadFile('tripwise-my-shortlist.json',JSON.stringify({exportedAt:new Date().toISOString(),source:'OpenStreetMap',places:shortlist},null,2),'application/json');
+  showToast('Your shortlist was downloaded.');
+});
+document.getElementById('clearShortlist').addEventListener('click',()=>{
+  if(!shortlist.length)return;
+  if(!confirm('Remove all saved places from this browser?'))return;
+  shortlist=[];saveShortlist();renderShortlist();
+  document.querySelectorAll('#placesResults .save-place').forEach(b=>{b.textContent='♡ Save to my trip';b.classList.remove('saved');});
+});
 document.getElementById('saveTop').addEventListener('click',exportPreferences);
 document.getElementById('exportPlan').addEventListener('click',exportItinerary);
 document.getElementById('printPlan').addEventListener('click',()=>{renderPlan();setTab('plan');window.print();});
 document.getElementById('feedbackBtn').addEventListener('click',()=>{const message=prompt('What should Tripwise AI do better? Your feedback stays in this prototype and is not sent anywhere.');if(message&&message.trim())showToast('Thanks — this prototype does not transmit feedback yet.');});
 loadPreferences();
-renderPlan(); analyzeReviews();
+renderPlan(); analyzeReviews(); renderShortlist();
 </script>
 </body>
 </html>
