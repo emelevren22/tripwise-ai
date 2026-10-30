@@ -192,7 +192,57 @@ footer strong { color:inherit; }
     <div class="workspace">
       <aside class="panel">
         <h3>Your travel brief</h3><p class="sub">Add the basics once. Your travel brief will be remembered in this browser for your next visit.</p>
-        <div class="field"><label for="destination">Destination</label><select id="destination"><option value="Lisbon">Lisbon, Portugal</option><option value="Paris">Paris, France</option><option value="London">London, United Kingdom</option><option value="Copenhagen">Copenhagen, Denmark</option></select></div>
+        
+<div class="field">
+  <label for="destination">Destination</label>
+  <select id="destination">
+    <option value="Lisbon">Lisbon, Portugal</option>
+    <option value="Paris">Paris, France</option>
+    <option value="London">London, United Kingdom</option>
+    <option value="Copenhagen">Copenhagen, Denmark</option>
+    <optgroup label="France">
+      <option value="Nice">Nice</option>
+      <option value="Lyon">Lyon</option>
+    </optgroup>
+    <optgroup label="Italy">
+      <option value="Rome">Rome</option>
+      <option value="Milan">Milan</option>
+      <option value="Florence">Florence</option>
+      <option value="Venice">Venice</option>
+    </optgroup>
+    <optgroup label="Spain">
+      <option value="Barcelona">Barcelona</option>
+      <option value="Madrid">Madrid</option>
+    </optgroup>
+    <optgroup label="Germany">
+      <option value="Berlin">Berlin</option>
+      <option value="Munich">Munich</option>
+    </optgroup>
+    <optgroup label="Other European destinations">
+      <option value="Amsterdam">Amsterdam, Netherlands</option>
+      <option value="Zurich">Zurich, Switzerland</option>
+      <option value="Athens">Athens, Greece</option>
+      <option value="Vienna">Vienna, Austria</option>
+      <option value="Prague">Prague, Czechia</option>
+      <option value="Budapest">Budapest, Hungary</option>
+    </optgroup>
+    <optgroup label="Türkiye">
+      <option value="Istanbul">Istanbul</option>
+      <option value="Antalya">Antalya</option>
+      <option value="Izmir">Izmir</option>
+      <option value="Bodrum">Bodrum</option>
+      <option value="Marmaris">Marmaris</option>
+      <option value="Cappadocia">Cappadocia</option>
+      <option value="Pamukkale">Pamukkale</option>
+    </optgroup>
+    <optgroup label="Worldwide">
+      <option value="NewYork">New York, USA</option>
+      <option value="Tokyo">Tokyo, Japan</option>
+      <option value="Dubai">Dubai, UAE</option>
+    </optgroup>
+  </select>
+</div>
+
         <div class="two"><div class="field"><label for="days">Trip length</label><select id="days"><option value="2">2 days</option><option value="3" selected>3 days</option><option value="4">4 days</option><option value="5">5 days</option></select></div><div class="field"><label for="travelers">Travellers</label><select id="travelers"><option value="1">1 traveller</option><option value="2" selected>2 travellers</option><option value="3">3 travellers</option><option value="4">4 travellers</option><option value="5">5 travellers</option><option value="6">6 travellers</option><option value="7">7 travellers</option><option value="8">8 travellers</option></select></div></div>
         <div class="two"><div class="field"><label for="startDate">Start date <span style="color:var(--muted);font-weight:400">(optional)</span></label><input id="startDate" type="date"></div><div class="field"><label for="budget">Budget style</label><select id="budget"><option value="low">Budget-minded</option><option value="mid" selected>Mid-range</option><option value="flex">Flexible</option></select></div></div>
         <div class="field"><label>What are you into?</label><div class="chips" id="interestChips"><button type="button" class="chip" aria-pressed="true" data-interest="culture">Culture</button><button type="button" class="chip" aria-pressed="true" data-interest="food">Food & coffee</button><button type="button" class="chip" aria-pressed="false" data-interest="nature">Nature</button><button type="button" class="chip" aria-pressed="false" data-interest="shopping">Shopping</button><button type="button" class="chip" aria-pressed="false" data-interest="slow">Slow mornings</button></div></div>
@@ -292,12 +342,43 @@ let selectedInterests = new Set(['culture','food']);
 let activeTab = 'plan';
 function showToast(msg) { const el=document.getElementById('toast'); el.textContent=msg; el.style.display='block'; clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>el.style.display='none',3200); }
 
+
+  
 const cityCentres = {
   Lisbon: {lat:38.7223, lon:-9.1393},
   Paris: {lat:48.8566, lon:2.3522},
   London: {lat:51.5072, lon:-0.1276},
-  Copenhagen: {lat:55.6761, lon:12.5683}
+  Copenhagen: {lat:55.6761, lon:12.5683},
+
+  Nice: {lat:43.7102, lon:7.2620},
+  Lyon: {lat:45.7640, lon:4.8357},
+  Rome: {lat:41.9028, lon:12.4964},
+  Milan: {lat:45.4642, lon:9.1900},
+  Florence: {lat:43.7696, lon:11.2558},
+  Venice: {lat:45.4408, lon:12.3155},
+  Barcelona: {lat:41.3874, lon:2.1686},
+  Madrid: {lat:40.4168, lon:-3.7038},
+  Berlin: {lat:52.5200, lon:13.4050},
+  Munich: {lat:48.1351, lon:11.5820},
+  Amsterdam: {lat:52.3676, lon:4.9041},
+  Zurich: {lat:47.3769, lon:8.5417},
+  Athens: {lat:37.9838, lon:23.7275},
+  Vienna: {lat:48.2082, lon:16.3738},
+  Prague: {lat:50.0755, lon:14.4378},
+  Budapest: {lat:47.4979, lon:19.0402},
+  NewYork: {lat:40.7128, lon:-74.0060},
+  Tokyo: {lat:35.6762, lon:139.6503},
+  Dubai: {lat:25.2048, lon:55.2708},
+
+  Istanbul: {lat:41.0082, lon:28.9784},
+  Antalya: {lat:36.8969, lon:30.7133},
+  Izmir: {lat:38.4237, lon:27.1428},
+  Bodrum: {lat:37.0344, lon:27.4305},
+  Marmaris: {lat:36.8549, lon:28.2742},
+  Cappadocia: {lat:38.6431, lon:34.8289},
+  Pamukkale: {lat:37.9204, lon:29.1217}
 };
+
 const placeCategories = {
   cafes: {label:'Café', filter:'["amenity"="cafe"]'},
   museums: {label:'Museum', filter:'["tourism"="museum"]'},
