@@ -286,7 +286,7 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
       </section>
     </div>
     <section class="panel places-section" id="realPlaces">
-      <div class="eyebrow">02 / Smart Global Explorer · V4.0</div>
+      <div class="eyebrow">02 / Smart Global Explorer · V4.2</div>
       <h2 style="font-size:26px;margin-bottom:8px">From the map to your shortlist.</h2>
       <p class="sub">Discover real OpenStreetMap records for cafés, museums, parks & gardens, and shops. Search by name, browse more results, and save favourites. Live neighbourhood search is available for supported areas; other areas link to OpenStreetMap.</p>
       <div class="explorer-filters">
@@ -502,7 +502,7 @@ function updateAreaHint() {
   const city=document.getElementById('explorerDestination').value;
   document.getElementById('areaHint').textContent=area
     ? workerArea(city,area)
-      ? `Live OpenStreetMap search is available around ${area} (approximately 2 km).`
+      ? (city === "Istanbul" && area === "Kadıköy" ? `Live OpenStreetMap search covers the Kadıköy administrative district.` : `Live OpenStreetMap search is available around ${area} (approximately 2 km).`)
       : `${area} is not yet supported by our live API. An OpenStreetMap search link will be provided.`
     : 'Live OpenStreetMap search covers approximately 2 km around the selected city centre.';
 }
@@ -535,7 +535,10 @@ function displayCurrentPlaces() {
   });
   const more=document.getElementById('loadMorePlaces');
   more.classList.toggle('hidden',count>=filtered.length);
-  setPlacesStatus(`${filtered.length} named map record${filtered.length===1?'':'s'} match · showing ${count}. Search area: ${currentPlaceArea || `central ${currentPlaceCity}`} (about 2 km). Results depend on OpenStreetMap coverage; opening hours and ratings are not verified.`);
+  const areaDescription = currentPlaceCity === "Istanbul" && currentPlaceArea === "Kadıköy"
+    ? "Kadıköy administrative district"
+    : `${currentPlaceArea || `central ${currentPlaceCity}`} (about 2 km)`;
+  setPlacesStatus(`${filtered.length} named map record${filtered.length===1?'':'s'} match · showing ${count}. Search area: ${areaDescription}. Results depend on OpenStreetMap coverage; opening hours and ratings are not verified.`);
 }
 function renderPlaceCards(elements, city, category, area='') {
   const seen=new Set();
