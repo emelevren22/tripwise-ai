@@ -286,7 +286,7 @@ Good value for the location. Small room, very clean, and quiet after midnight.</
       </section>
     </div>
     <section class="panel places-section" id="realPlaces">
-      <div class="eyebrow">02 / Smart Global Explorer · V4.2</div>
+      <div class="eyebrow">02 / Smart Global Explorer · V5.1</div>
       <h2 style="font-size:26px;margin-bottom:8px">From the map to your shortlist.</h2>
       <p class="sub">Discover real OpenStreetMap records for cafés, museums, parks & gardens, and shops. Search by name, browse more results, and save favourites. Live neighbourhood search is available for supported areas; other areas link to OpenStreetMap.</p>
       <div class="explorer-filters">
@@ -362,13 +362,441 @@ function showToast(msg) { const el=document.getElementById('toast'); el.textCont
 
   
 const countryDestinations = {
-  'Portugal':['Lisbon'], 'France':['Paris','Nice','Lyon'], 'United Kingdom':['London'],
-  'Denmark':['Copenhagen'], 'Italy':['Rome','Milan','Florence','Venice'],
-  'Spain':['Barcelona','Madrid'], 'Germany':['Berlin','Munich'],
-  'Netherlands':['Amsterdam'], 'Switzerland':['Zurich'], 'Greece':['Athens'],
-  'Austria':['Vienna'], 'Czechia':['Prague'], 'Hungary':['Budapest'],
-  'Türkiye':['Istanbul','Antalya','Izmir','Bodrum','Marmaris','Cappadocia','Pamukkale'],
-  'USA':['NewYork'], 'Japan':['Tokyo'], 'UAE':['Dubai']
+  "Portugal": [
+    "Lisbon",
+    "Porto",
+    "Faro",
+    "Coimbra",
+    "Braga",
+    "Funchal"
+  ],
+  "France": [
+    "Paris",
+    "Nice",
+    "Lyon",
+    "Marseille",
+    "Bordeaux",
+    "Toulouse",
+    "Strasbourg",
+    "Lille",
+    "Nantes"
+  ],
+  "United Kingdom": [
+    "London",
+    "Edinburgh",
+    "Glasgow",
+    "Manchester",
+    "Liverpool",
+    "Birmingham",
+    "Bristol",
+    "Oxford",
+    "Bath"
+  ],
+  "Denmark": [
+    "Copenhagen",
+    "Aarhus",
+    "Odense"
+  ],
+  "Italy": [
+    "Rome",
+    "Milan",
+    "Florence",
+    "Venice",
+    "Naples",
+    "Turin",
+    "Bologna",
+    "Verona",
+    "Genoa",
+    "Palermo",
+    "Catania",
+    "Pisa",
+    "Siena",
+    "Bari"
+  ],
+  "Spain": [
+    "Barcelona",
+    "Madrid",
+    "Seville",
+    "Valencia",
+    "Malaga",
+    "Granada",
+    "Bilbao",
+    "Zaragoza",
+    "Alicante",
+    "Palma"
+  ],
+  "Germany": [
+    "Berlin",
+    "Munich",
+    "Hamburg",
+    "Frankfurt",
+    "Cologne",
+    "Dusseldorf",
+    "Stuttgart",
+    "Dresden",
+    "Leipzig",
+    "Nuremberg"
+  ],
+  "Netherlands": [
+    "Amsterdam",
+    "Rotterdam",
+    "TheHague",
+    "Utrecht",
+    "Eindhoven",
+    "Maastricht"
+  ],
+  "Switzerland": [
+    "Zurich",
+    "Geneva",
+    "Basel",
+    "Bern",
+    "Lucerne",
+    "Lausanne"
+  ],
+  "Greece": [
+    "Athens",
+    "Thessaloniki",
+    "Heraklion",
+    "Chania",
+    "Rhodes"
+  ],
+  "Austria": [
+    "Vienna",
+    "Salzburg",
+    "Innsbruck",
+    "Graz",
+    "Linz"
+  ],
+  "Czechia": [
+    "Prague",
+    "Brno",
+    "CeskyKrumlov"
+  ],
+  "Hungary": [
+    "Budapest",
+    "Debrecen",
+    "Szeged"
+  ],
+  "Türkiye": [
+    "Istanbul",
+    "Antalya",
+    "Izmir",
+    "Bodrum",
+    "Marmaris",
+    "Cappadocia",
+    "Pamukkale",
+    "Ankara",
+    "Bursa",
+    "Eskisehir",
+    "Trabzon",
+    "Gaziantep",
+    "Mersin",
+    "Canakkale",
+    "Fethiye",
+    "Kas",
+    "Alanya",
+    "Adana",
+    "Sanliurfa",
+    "Mardin",
+    "Kusadasi"
+  ],
+  "USA": [
+    "NewYork",
+    "LosAngeles",
+    "SanFrancisco",
+    "Chicago",
+    "Boston",
+    "Miami",
+    "WashingtonDC",
+    "Seattle",
+    "LasVegas",
+    "Orlando",
+    "SanDiego",
+    "Austin",
+    "NewOrleans"
+  ],
+  "Japan": [
+    "Tokyo",
+    "Osaka",
+    "Kyoto",
+    "Yokohama",
+    "Sapporo",
+    "Hiroshima",
+    "Fukuoka",
+    "Nagoya",
+    "Nara"
+  ],
+  "UAE": [
+    "Dubai",
+    "AbuDhabi",
+    "Sharjah"
+  ],
+  "Belgium": [
+    "Brussels",
+    "Bruges",
+    "Antwerp",
+    "Ghent"
+  ],
+  "Ireland": [
+    "Dublin",
+    "Cork",
+    "Galway"
+  ],
+  "Norway": [
+    "Oslo",
+    "Bergen",
+    "Tromso"
+  ],
+  "Sweden": [
+    "Stockholm",
+    "Gothenburg",
+    "Malmo"
+  ],
+  "Finland": [
+    "Helsinki",
+    "Turku",
+    "Tampere"
+  ],
+  "Poland": [
+    "Warsaw",
+    "Krakow",
+    "Gdansk",
+    "Wroclaw",
+    "Poznan"
+  ],
+  "Croatia": [
+    "Zagreb",
+    "Split",
+    "Dubrovnik",
+    "Zadar",
+    "Pula"
+  ],
+  "Slovenia": [
+    "Ljubljana",
+    "Bled"
+  ],
+  "Slovakia": [
+    "Bratislava",
+    "Kosice"
+  ],
+  "Romania": [
+    "Bucharest",
+    "ClujNapoca",
+    "Brasov",
+    "Sibiu",
+    "Timisoara"
+  ],
+  "Bulgaria": [
+    "Sofia",
+    "Plovdiv",
+    "Varna",
+    "Burgas"
+  ],
+  "Serbia": [
+    "Belgrade",
+    "NoviSad"
+  ],
+  "Bosnia and Herzegovina": [
+    "Sarajevo",
+    "Mostar"
+  ],
+  "Montenegro": [
+    "Kotor",
+    "Budva",
+    "Podgorica"
+  ],
+  "Albania": [
+    "Tirana",
+    "Durres",
+    "Saranda"
+  ],
+  "North Macedonia": [
+    "Skopje",
+    "Ohrid"
+  ],
+  "Estonia": [
+    "Tallinn",
+    "Tartu"
+  ],
+  "Latvia": [
+    "Riga",
+    "Jurmala"
+  ],
+  "Lithuania": [
+    "Vilnius",
+    "Kaunas"
+  ],
+  "Iceland": [
+    "Reykjavik",
+    "Akureyri"
+  ],
+  "Luxembourg": [
+    "LuxembourgCity"
+  ],
+  "Malta": [
+    "Valletta",
+    "Sliema"
+  ],
+  "Cyprus": [
+    "Nicosia",
+    "Limassol",
+    "Paphos"
+  ],
+  "Canada": [
+    "Toronto",
+    "Vancouver",
+    "Montreal",
+    "QuebecCity",
+    "Ottawa",
+    "Calgary"
+  ],
+  "Mexico": [
+    "MexicoCity",
+    "Cancun",
+    "Guadalajara",
+    "Oaxaca"
+  ],
+  "Brazil": [
+    "RioDeJaneiro",
+    "SaoPaulo",
+    "Salvador",
+    "Florianopolis"
+  ],
+  "Argentina": [
+    "BuenosAires",
+    "Mendoza",
+    "CordobaAR"
+  ],
+  "Chile": [
+    "Santiago",
+    "Valparaiso"
+  ],
+  "Colombia": [
+    "Bogota",
+    "Medellin",
+    "Cartagena"
+  ],
+  "Peru": [
+    "Lima",
+    "Cusco",
+    "Arequipa"
+  ],
+  "Australia": [
+    "Sydney",
+    "Melbourne",
+    "Brisbane",
+    "Perth",
+    "Adelaide"
+  ],
+  "New Zealand": [
+    "Auckland",
+    "Wellington",
+    "Queenstown",
+    "Christchurch"
+  ],
+  "South Korea": [
+    "Seoul",
+    "Busan",
+    "Incheon"
+  ],
+  "Thailand": [
+    "Bangkok",
+    "ChiangMai",
+    "Phuket"
+  ],
+  "Vietnam": [
+    "Hanoi",
+    "HoChiMinhCity",
+    "DaNang",
+    "HoiAn"
+  ],
+  "Singapore": [
+    "Singapore"
+  ],
+  "Malaysia": [
+    "KualaLumpur",
+    "Penang",
+    "Malacca"
+  ],
+  "Indonesia": [
+    "Jakarta",
+    "Denpasar",
+    "Yogyakarta"
+  ],
+  "Philippines": [
+    "Manila",
+    "CebuCity"
+  ],
+  "India": [
+    "Delhi",
+    "Mumbai",
+    "Jaipur",
+    "Bengaluru",
+    "GoaPanaji"
+  ],
+  "China": [
+    "Beijing",
+    "Shanghai",
+    "Guangzhou",
+    "Shenzhen",
+    "Chengdu"
+  ],
+  "Taiwan": [
+    "Taipei",
+    "Kaohsiung"
+  ],
+  "Hong Kong": [
+    "HongKong"
+  ],
+  "Israel": [
+    "TelAviv",
+    "Jerusalem"
+  ],
+  "Jordan": [
+    "Amman",
+    "Aqaba"
+  ],
+  "Egypt": [
+    "Cairo",
+    "Alexandria",
+    "Luxor"
+  ],
+  "Morocco": [
+    "Marrakech",
+    "Casablanca",
+    "Fes",
+    "Rabat",
+    "Tangier"
+  ],
+  "South Africa": [
+    "CapeTown",
+    "Johannesburg",
+    "Durban"
+  ],
+  "Kenya": [
+    "Nairobi",
+    "Mombasa"
+  ],
+  "Georgia": [
+    "Tbilisi",
+    "Batumi"
+  ],
+  "Armenia": [
+    "Yerevan"
+  ],
+  "Azerbaijan": [
+    "Baku"
+  ],
+  "Qatar": [
+    "Doha"
+  ],
+  "Saudi Arabia": [
+    "Riyadh",
+    "Jeddah"
+  ],
+  "Oman": [
+    "Muscat"
+  ]
 };
 const knownAreas = {
   Bodrum:['Bodrum Centre','Yalıkavak','Gümüşlük','Bitez','Türkbükü','Turgutreis','Ortakent','Gümbet','Torba'],
@@ -390,38 +818,1170 @@ const knownAreas = {
   Dubai:['Downtown Dubai','Dubai Marina','Jumeirah','Deira']
 };
 const cityCentres = {
-  Lisbon: {lat:38.7223, lon:-9.1393},
-  Paris: {lat:48.8566, lon:2.3522},
-  London: {lat:51.5072, lon:-0.1276},
-  Copenhagen: {lat:55.6761, lon:12.5683},
-
-  Nice: {lat:43.7102, lon:7.2620},
-  Lyon: {lat:45.7640, lon:4.8357},
-  Rome: {lat:41.9028, lon:12.4964},
-  Milan: {lat:45.4642, lon:9.1900},
-  Florence: {lat:43.7696, lon:11.2558},
-  Venice: {lat:45.4408, lon:12.3155},
-  Barcelona: {lat:41.3874, lon:2.1686},
-  Madrid: {lat:40.4168, lon:-3.7038},
-  Berlin: {lat:52.5200, lon:13.4050},
-  Munich: {lat:48.1351, lon:11.5820},
-  Amsterdam: {lat:52.3676, lon:4.9041},
-  Zurich: {lat:47.3769, lon:8.5417},
-  Athens: {lat:37.9838, lon:23.7275},
-  Vienna: {lat:48.2082, lon:16.3738},
-  Prague: {lat:50.0755, lon:14.4378},
-  Budapest: {lat:47.4979, lon:19.0402},
-  NewYork: {lat:40.7128, lon:-74.0060},
-  Tokyo: {lat:35.6762, lon:139.6503},
-  Dubai: {lat:25.2048, lon:55.2708},
-
-  Istanbul: {lat:41.0082, lon:28.9784},
-  Antalya: {lat:36.8969, lon:30.7133},
-  Izmir: {lat:38.4237, lon:27.1428},
-  Bodrum: {lat:37.0344, lon:27.4305},
-  Marmaris: {lat:36.8549, lon:28.2742},
-  Cappadocia: {lat:38.6431, lon:34.8289},
-  Pamukkale: {lat:37.9204, lon:29.1217}
+  "Lisbon": {
+    "lat": 38.7223,
+    "lon": -9.1393
+  },
+  "Paris": {
+    "lat": 48.8566,
+    "lon": 2.3522
+  },
+  "London": {
+    "lat": 51.5072,
+    "lon": -0.1276
+  },
+  "Copenhagen": {
+    "lat": 55.6761,
+    "lon": 12.5683
+  },
+  "Nice": {
+    "lat": 43.7102,
+    "lon": 7.262
+  },
+  "Lyon": {
+    "lat": 45.764,
+    "lon": 4.8357
+  },
+  "Rome": {
+    "lat": 41.9028,
+    "lon": 12.4964
+  },
+  "Milan": {
+    "lat": 45.4642,
+    "lon": 9.19
+  },
+  "Florence": {
+    "lat": 43.7696,
+    "lon": 11.2558
+  },
+  "Venice": {
+    "lat": 45.4408,
+    "lon": 12.3155
+  },
+  "Barcelona": {
+    "lat": 41.3874,
+    "lon": 2.1686
+  },
+  "Madrid": {
+    "lat": 40.4168,
+    "lon": -3.7038
+  },
+  "Berlin": {
+    "lat": 52.52,
+    "lon": 13.405
+  },
+  "Munich": {
+    "lat": 48.1351,
+    "lon": 11.582
+  },
+  "Amsterdam": {
+    "lat": 52.3676,
+    "lon": 4.9041
+  },
+  "Zurich": {
+    "lat": 47.3769,
+    "lon": 8.5417
+  },
+  "Athens": {
+    "lat": 37.9838,
+    "lon": 23.7275
+  },
+  "Vienna": {
+    "lat": 48.2082,
+    "lon": 16.3738
+  },
+  "Prague": {
+    "lat": 50.0755,
+    "lon": 14.4378
+  },
+  "Budapest": {
+    "lat": 47.4979,
+    "lon": 19.0402
+  },
+  "NewYork": {
+    "lat": 40.7128,
+    "lon": -74.006
+  },
+  "Tokyo": {
+    "lat": 35.6762,
+    "lon": 139.6503
+  },
+  "Dubai": {
+    "lat": 25.2048,
+    "lon": 55.2708
+  },
+  "Istanbul": {
+    "lat": 41.0082,
+    "lon": 28.9784
+  },
+  "Antalya": {
+    "lat": 36.8969,
+    "lon": 30.7133
+  },
+  "Izmir": {
+    "lat": 38.4237,
+    "lon": 27.1428
+  },
+  "Bodrum": {
+    "lat": 37.0344,
+    "lon": 27.4305
+  },
+  "Marmaris": {
+    "lat": 36.8549,
+    "lon": 28.2742
+  },
+  "Cappadocia": {
+    "lat": 38.6431,
+    "lon": 34.8289
+  },
+  "Pamukkale": {
+    "lat": 37.9204,
+    "lon": 29.1217
+  },
+  "Porto": {
+    "lat": 41.1579,
+    "lon": -8.6291
+  },
+  "Faro": {
+    "lat": 37.0194,
+    "lon": -7.9304
+  },
+  "Coimbra": {
+    "lat": 40.2033,
+    "lon": -8.4103
+  },
+  "Braga": {
+    "lat": 41.5454,
+    "lon": -8.4265
+  },
+  "Funchal": {
+    "lat": 32.6669,
+    "lon": -16.9241
+  },
+  "Marseille": {
+    "lat": 43.2965,
+    "lon": 5.3698
+  },
+  "Bordeaux": {
+    "lat": 44.8378,
+    "lon": -0.5792
+  },
+  "Toulouse": {
+    "lat": 43.6047,
+    "lon": 1.4442
+  },
+  "Strasbourg": {
+    "lat": 48.5734,
+    "lon": 7.7521
+  },
+  "Lille": {
+    "lat": 50.6292,
+    "lon": 3.0573
+  },
+  "Nantes": {
+    "lat": 47.2184,
+    "lon": -1.5536
+  },
+  "Edinburgh": {
+    "lat": 55.9533,
+    "lon": -3.1883
+  },
+  "Glasgow": {
+    "lat": 55.8642,
+    "lon": -4.2518
+  },
+  "Manchester": {
+    "lat": 53.4808,
+    "lon": -2.2426
+  },
+  "Liverpool": {
+    "lat": 53.4084,
+    "lon": -2.9916
+  },
+  "Birmingham": {
+    "lat": 52.4862,
+    "lon": -1.8904
+  },
+  "Bristol": {
+    "lat": 51.4545,
+    "lon": -2.5879
+  },
+  "Oxford": {
+    "lat": 51.752,
+    "lon": -1.2577
+  },
+  "Bath": {
+    "lat": 51.3811,
+    "lon": -2.359
+  },
+  "Aarhus": {
+    "lat": 56.1629,
+    "lon": 10.2039
+  },
+  "Odense": {
+    "lat": 55.4038,
+    "lon": 10.4024
+  },
+  "Naples": {
+    "lat": 40.8518,
+    "lon": 14.2681
+  },
+  "Turin": {
+    "lat": 45.0703,
+    "lon": 7.6869
+  },
+  "Bologna": {
+    "lat": 44.4949,
+    "lon": 11.3426
+  },
+  "Verona": {
+    "lat": 45.4384,
+    "lon": 10.9916
+  },
+  "Genoa": {
+    "lat": 44.4056,
+    "lon": 8.9463
+  },
+  "Palermo": {
+    "lat": 38.1157,
+    "lon": 13.3615
+  },
+  "Catania": {
+    "lat": 37.5079,
+    "lon": 15.083
+  },
+  "Pisa": {
+    "lat": 43.7228,
+    "lon": 10.4017
+  },
+  "Siena": {
+    "lat": 43.3188,
+    "lon": 11.3308
+  },
+  "Bari": {
+    "lat": 41.1171,
+    "lon": 16.8719
+  },
+  "Seville": {
+    "lat": 37.3891,
+    "lon": -5.9845
+  },
+  "Valencia": {
+    "lat": 39.4699,
+    "lon": -0.3763
+  },
+  "Malaga": {
+    "lat": 36.7213,
+    "lon": -4.4214
+  },
+  "Granada": {
+    "lat": 37.1773,
+    "lon": -3.5986
+  },
+  "Bilbao": {
+    "lat": 43.263,
+    "lon": -2.935
+  },
+  "Zaragoza": {
+    "lat": 41.6488,
+    "lon": -0.8891
+  },
+  "Alicante": {
+    "lat": 38.3452,
+    "lon": -0.481
+  },
+  "Palma": {
+    "lat": 39.5696,
+    "lon": 2.6502
+  },
+  "Hamburg": {
+    "lat": 53.5511,
+    "lon": 9.9937
+  },
+  "Frankfurt": {
+    "lat": 50.1109,
+    "lon": 8.6821
+  },
+  "Cologne": {
+    "lat": 50.9375,
+    "lon": 6.9603
+  },
+  "Dusseldorf": {
+    "lat": 51.2277,
+    "lon": 6.7735
+  },
+  "Stuttgart": {
+    "lat": 48.7758,
+    "lon": 9.1829
+  },
+  "Dresden": {
+    "lat": 51.0504,
+    "lon": 13.7373
+  },
+  "Leipzig": {
+    "lat": 51.3397,
+    "lon": 12.3731
+  },
+  "Nuremberg": {
+    "lat": 49.4521,
+    "lon": 11.0767
+  },
+  "Rotterdam": {
+    "lat": 51.9244,
+    "lon": 4.4777
+  },
+  "TheHague": {
+    "lat": 52.0705,
+    "lon": 4.3007
+  },
+  "Utrecht": {
+    "lat": 52.0907,
+    "lon": 5.1214
+  },
+  "Eindhoven": {
+    "lat": 51.4416,
+    "lon": 5.4697
+  },
+  "Maastricht": {
+    "lat": 50.8514,
+    "lon": 5.691
+  },
+  "Geneva": {
+    "lat": 46.2044,
+    "lon": 6.1432
+  },
+  "Basel": {
+    "lat": 47.5596,
+    "lon": 7.5886
+  },
+  "Bern": {
+    "lat": 46.948,
+    "lon": 7.4474
+  },
+  "Lucerne": {
+    "lat": 47.0502,
+    "lon": 8.3093
+  },
+  "Lausanne": {
+    "lat": 46.5197,
+    "lon": 6.6323
+  },
+  "Thessaloniki": {
+    "lat": 40.6401,
+    "lon": 22.9444
+  },
+  "Heraklion": {
+    "lat": 35.3387,
+    "lon": 25.1442
+  },
+  "Chania": {
+    "lat": 35.5138,
+    "lon": 24.018
+  },
+  "Rhodes": {
+    "lat": 36.4341,
+    "lon": 28.2176
+  },
+  "Salzburg": {
+    "lat": 47.8095,
+    "lon": 13.055
+  },
+  "Innsbruck": {
+    "lat": 47.2692,
+    "lon": 11.4041
+  },
+  "Graz": {
+    "lat": 47.0707,
+    "lon": 15.4395
+  },
+  "Linz": {
+    "lat": 48.3069,
+    "lon": 14.2858
+  },
+  "Brno": {
+    "lat": 49.1951,
+    "lon": 16.6068
+  },
+  "CeskyKrumlov": {
+    "lat": 48.8127,
+    "lon": 14.3175
+  },
+  "Debrecen": {
+    "lat": 47.5316,
+    "lon": 21.6273
+  },
+  "Szeged": {
+    "lat": 46.253,
+    "lon": 20.1414
+  },
+  "Ankara": {
+    "lat": 39.9334,
+    "lon": 32.8597
+  },
+  "Bursa": {
+    "lat": 40.1885,
+    "lon": 29.061
+  },
+  "Eskisehir": {
+    "lat": 39.7767,
+    "lon": 30.5206
+  },
+  "Trabzon": {
+    "lat": 41.0027,
+    "lon": 39.7168
+  },
+  "Gaziantep": {
+    "lat": 37.0662,
+    "lon": 37.3833
+  },
+  "Mersin": {
+    "lat": 36.8121,
+    "lon": 34.6415
+  },
+  "Canakkale": {
+    "lat": 40.1467,
+    "lon": 26.4086
+  },
+  "Fethiye": {
+    "lat": 36.6217,
+    "lon": 29.1164
+  },
+  "Kas": {
+    "lat": 36.2018,
+    "lon": 29.6377
+  },
+  "Alanya": {
+    "lat": 36.5438,
+    "lon": 31.9998
+  },
+  "Adana": {
+    "lat": 37,
+    "lon": 35.3213
+  },
+  "Sanliurfa": {
+    "lat": 37.1674,
+    "lon": 38.7955
+  },
+  "Mardin": {
+    "lat": 37.3122,
+    "lon": 40.7351
+  },
+  "Kusadasi": {
+    "lat": 37.8579,
+    "lon": 27.261
+  },
+  "LosAngeles": {
+    "lat": 34.0522,
+    "lon": -118.2437
+  },
+  "SanFrancisco": {
+    "lat": 37.7749,
+    "lon": -122.4194
+  },
+  "Chicago": {
+    "lat": 41.8781,
+    "lon": -87.6298
+  },
+  "Boston": {
+    "lat": 42.3601,
+    "lon": -71.0589
+  },
+  "Miami": {
+    "lat": 25.7617,
+    "lon": -80.1918
+  },
+  "WashingtonDC": {
+    "lat": 38.9072,
+    "lon": -77.0369
+  },
+  "Seattle": {
+    "lat": 47.6062,
+    "lon": -122.3321
+  },
+  "LasVegas": {
+    "lat": 36.1699,
+    "lon": -115.1398
+  },
+  "Orlando": {
+    "lat": 28.5383,
+    "lon": -81.3792
+  },
+  "SanDiego": {
+    "lat": 32.7157,
+    "lon": -117.1611
+  },
+  "Austin": {
+    "lat": 30.2672,
+    "lon": -97.7431
+  },
+  "NewOrleans": {
+    "lat": 29.9511,
+    "lon": -90.0715
+  },
+  "Osaka": {
+    "lat": 34.6937,
+    "lon": 135.5023
+  },
+  "Kyoto": {
+    "lat": 35.0116,
+    "lon": 135.7681
+  },
+  "Yokohama": {
+    "lat": 35.4437,
+    "lon": 139.638
+  },
+  "Sapporo": {
+    "lat": 43.0618,
+    "lon": 141.3545
+  },
+  "Hiroshima": {
+    "lat": 34.3853,
+    "lon": 132.4553
+  },
+  "Fukuoka": {
+    "lat": 33.5902,
+    "lon": 130.4017
+  },
+  "Nagoya": {
+    "lat": 35.1815,
+    "lon": 136.9066
+  },
+  "Nara": {
+    "lat": 34.6851,
+    "lon": 135.8048
+  },
+  "AbuDhabi": {
+    "lat": 24.4539,
+    "lon": 54.3773
+  },
+  "Sharjah": {
+    "lat": 25.3463,
+    "lon": 55.4209
+  },
+  "Brussels": {
+    "lat": 50.8503,
+    "lon": 4.3517
+  },
+  "Bruges": {
+    "lat": 51.2093,
+    "lon": 3.2247
+  },
+  "Antwerp": {
+    "lat": 51.2194,
+    "lon": 4.4025
+  },
+  "Ghent": {
+    "lat": 51.0543,
+    "lon": 3.7174
+  },
+  "Dublin": {
+    "lat": 53.3498,
+    "lon": -6.2603
+  },
+  "Cork": {
+    "lat": 51.8985,
+    "lon": -8.4756
+  },
+  "Galway": {
+    "lat": 53.2707,
+    "lon": -9.0568
+  },
+  "Oslo": {
+    "lat": 59.9139,
+    "lon": 10.7522
+  },
+  "Bergen": {
+    "lat": 60.3913,
+    "lon": 5.3221
+  },
+  "Tromso": {
+    "lat": 69.6492,
+    "lon": 18.9553
+  },
+  "Stockholm": {
+    "lat": 59.3293,
+    "lon": 18.0686
+  },
+  "Gothenburg": {
+    "lat": 57.7089,
+    "lon": 11.9746
+  },
+  "Malmo": {
+    "lat": 55.605,
+    "lon": 13.0038
+  },
+  "Helsinki": {
+    "lat": 60.1699,
+    "lon": 24.9384
+  },
+  "Turku": {
+    "lat": 60.4518,
+    "lon": 22.2666
+  },
+  "Tampere": {
+    "lat": 61.4978,
+    "lon": 23.761
+  },
+  "Warsaw": {
+    "lat": 52.2297,
+    "lon": 21.0122
+  },
+  "Krakow": {
+    "lat": 50.0647,
+    "lon": 19.945
+  },
+  "Gdansk": {
+    "lat": 54.352,
+    "lon": 18.6466
+  },
+  "Wroclaw": {
+    "lat": 51.1079,
+    "lon": 17.0385
+  },
+  "Poznan": {
+    "lat": 52.4064,
+    "lon": 16.9252
+  },
+  "Zagreb": {
+    "lat": 45.815,
+    "lon": 15.9819
+  },
+  "Split": {
+    "lat": 43.5081,
+    "lon": 16.4402
+  },
+  "Dubrovnik": {
+    "lat": 42.6507,
+    "lon": 18.0944
+  },
+  "Zadar": {
+    "lat": 44.1194,
+    "lon": 15.2314
+  },
+  "Pula": {
+    "lat": 44.8666,
+    "lon": 13.8496
+  },
+  "Ljubljana": {
+    "lat": 46.0569,
+    "lon": 14.5058
+  },
+  "Bled": {
+    "lat": 46.3683,
+    "lon": 14.1146
+  },
+  "Bratislava": {
+    "lat": 48.1486,
+    "lon": 17.1077
+  },
+  "Kosice": {
+    "lat": 48.7164,
+    "lon": 21.2611
+  },
+  "Bucharest": {
+    "lat": 44.4268,
+    "lon": 26.1025
+  },
+  "ClujNapoca": {
+    "lat": 46.7712,
+    "lon": 23.6236
+  },
+  "Brasov": {
+    "lat": 45.6579,
+    "lon": 25.6012
+  },
+  "Sibiu": {
+    "lat": 45.7983,
+    "lon": 24.1256
+  },
+  "Timisoara": {
+    "lat": 45.7489,
+    "lon": 21.2087
+  },
+  "Sofia": {
+    "lat": 42.6977,
+    "lon": 23.3219
+  },
+  "Plovdiv": {
+    "lat": 42.1354,
+    "lon": 24.7453
+  },
+  "Varna": {
+    "lat": 43.2141,
+    "lon": 27.9147
+  },
+  "Burgas": {
+    "lat": 42.5048,
+    "lon": 27.4626
+  },
+  "Belgrade": {
+    "lat": 44.7866,
+    "lon": 20.4489
+  },
+  "NoviSad": {
+    "lat": 45.2671,
+    "lon": 19.8335
+  },
+  "Sarajevo": {
+    "lat": 43.8563,
+    "lon": 18.4131
+  },
+  "Mostar": {
+    "lat": 43.3438,
+    "lon": 17.8078
+  },
+  "Kotor": {
+    "lat": 42.4247,
+    "lon": 18.7712
+  },
+  "Budva": {
+    "lat": 42.2911,
+    "lon": 18.84
+  },
+  "Podgorica": {
+    "lat": 42.4304,
+    "lon": 19.2594
+  },
+  "Tirana": {
+    "lat": 41.3275,
+    "lon": 19.8187
+  },
+  "Durres": {
+    "lat": 41.3231,
+    "lon": 19.4414
+  },
+  "Saranda": {
+    "lat": 39.8756,
+    "lon": 20.0053
+  },
+  "Skopje": {
+    "lat": 41.9981,
+    "lon": 21.4254
+  },
+  "Ohrid": {
+    "lat": 41.1231,
+    "lon": 20.8016
+  },
+  "Tallinn": {
+    "lat": 59.437,
+    "lon": 24.7536
+  },
+  "Tartu": {
+    "lat": 58.3776,
+    "lon": 26.729
+  },
+  "Riga": {
+    "lat": 56.9496,
+    "lon": 24.1052
+  },
+  "Jurmala": {
+    "lat": 56.9677,
+    "lon": 23.7704
+  },
+  "Vilnius": {
+    "lat": 54.6872,
+    "lon": 25.2797
+  },
+  "Kaunas": {
+    "lat": 54.8985,
+    "lon": 23.9036
+  },
+  "Reykjavik": {
+    "lat": 64.1466,
+    "lon": -21.9426
+  },
+  "Akureyri": {
+    "lat": 65.6835,
+    "lon": -18.0878
+  },
+  "LuxembourgCity": {
+    "lat": 49.6116,
+    "lon": 6.1319
+  },
+  "Valletta": {
+    "lat": 35.8992,
+    "lon": 14.5141
+  },
+  "Sliema": {
+    "lat": 35.9122,
+    "lon": 14.5045
+  },
+  "Nicosia": {
+    "lat": 35.1856,
+    "lon": 33.3823
+  },
+  "Limassol": {
+    "lat": 34.7071,
+    "lon": 33.0226
+  },
+  "Paphos": {
+    "lat": 34.772,
+    "lon": 32.4297
+  },
+  "Toronto": {
+    "lat": 43.6532,
+    "lon": -79.3832
+  },
+  "Vancouver": {
+    "lat": 49.2827,
+    "lon": -123.1207
+  },
+  "Montreal": {
+    "lat": 45.5017,
+    "lon": -73.5673
+  },
+  "QuebecCity": {
+    "lat": 46.8139,
+    "lon": -71.208
+  },
+  "Ottawa": {
+    "lat": 45.4215,
+    "lon": -75.6972
+  },
+  "Calgary": {
+    "lat": 51.0447,
+    "lon": -114.0719
+  },
+  "MexicoCity": {
+    "lat": 19.4326,
+    "lon": -99.1332
+  },
+  "Cancun": {
+    "lat": 21.1619,
+    "lon": -86.8515
+  },
+  "Guadalajara": {
+    "lat": 20.6597,
+    "lon": -103.3496
+  },
+  "Oaxaca": {
+    "lat": 17.0732,
+    "lon": -96.7266
+  },
+  "RioDeJaneiro": {
+    "lat": -22.9068,
+    "lon": -43.1729
+  },
+  "SaoPaulo": {
+    "lat": -23.5505,
+    "lon": -46.6333
+  },
+  "Salvador": {
+    "lat": -12.9777,
+    "lon": -38.5016
+  },
+  "Florianopolis": {
+    "lat": -27.5954,
+    "lon": -48.548
+  },
+  "BuenosAires": {
+    "lat": -34.6037,
+    "lon": -58.3816
+  },
+  "Mendoza": {
+    "lat": -32.8895,
+    "lon": -68.8458
+  },
+  "CordobaAR": {
+    "lat": -31.4201,
+    "lon": -64.1888
+  },
+  "Santiago": {
+    "lat": -33.4489,
+    "lon": -70.6693
+  },
+  "Valparaiso": {
+    "lat": -33.0472,
+    "lon": -71.6127
+  },
+  "Bogota": {
+    "lat": 4.711,
+    "lon": -74.0721
+  },
+  "Medellin": {
+    "lat": 6.2442,
+    "lon": -75.5812
+  },
+  "Cartagena": {
+    "lat": 10.391,
+    "lon": -75.4794
+  },
+  "Lima": {
+    "lat": -12.0464,
+    "lon": -77.0428
+  },
+  "Cusco": {
+    "lat": -13.5319,
+    "lon": -71.9675
+  },
+  "Arequipa": {
+    "lat": -16.409,
+    "lon": -71.5375
+  },
+  "Sydney": {
+    "lat": -33.8688,
+    "lon": 151.2093
+  },
+  "Melbourne": {
+    "lat": -37.8136,
+    "lon": 144.9631
+  },
+  "Brisbane": {
+    "lat": -27.4698,
+    "lon": 153.0251
+  },
+  "Perth": {
+    "lat": -31.9523,
+    "lon": 115.8613
+  },
+  "Adelaide": {
+    "lat": -34.9285,
+    "lon": 138.6007
+  },
+  "Auckland": {
+    "lat": -36.8485,
+    "lon": 174.7633
+  },
+  "Wellington": {
+    "lat": -41.2865,
+    "lon": 174.7767
+  },
+  "Queenstown": {
+    "lat": -45.0312,
+    "lon": 168.6626
+  },
+  "Christchurch": {
+    "lat": -43.5321,
+    "lon": 172.6362
+  },
+  "Seoul": {
+    "lat": 37.5665,
+    "lon": 126.978
+  },
+  "Busan": {
+    "lat": 35.1796,
+    "lon": 129.0756
+  },
+  "Incheon": {
+    "lat": 37.4563,
+    "lon": 126.7052
+  },
+  "Bangkok": {
+    "lat": 13.7563,
+    "lon": 100.5018
+  },
+  "ChiangMai": {
+    "lat": 18.7883,
+    "lon": 98.9853
+  },
+  "Phuket": {
+    "lat": 7.8804,
+    "lon": 98.3923
+  },
+  "Hanoi": {
+    "lat": 21.0278,
+    "lon": 105.8342
+  },
+  "HoChiMinhCity": {
+    "lat": 10.8231,
+    "lon": 106.6297
+  },
+  "DaNang": {
+    "lat": 16.0544,
+    "lon": 108.2022
+  },
+  "HoiAn": {
+    "lat": 15.8801,
+    "lon": 108.338
+  },
+  "Singapore": {
+    "lat": 1.3521,
+    "lon": 103.8198
+  },
+  "KualaLumpur": {
+    "lat": 3.139,
+    "lon": 101.6869
+  },
+  "Penang": {
+    "lat": 5.4141,
+    "lon": 100.3288
+  },
+  "Malacca": {
+    "lat": 2.1896,
+    "lon": 102.2501
+  },
+  "Jakarta": {
+    "lat": -6.2088,
+    "lon": 106.8456
+  },
+  "Denpasar": {
+    "lat": -8.6705,
+    "lon": 115.2126
+  },
+  "Yogyakarta": {
+    "lat": -7.7956,
+    "lon": 110.3695
+  },
+  "Manila": {
+    "lat": 14.5995,
+    "lon": 120.9842
+  },
+  "CebuCity": {
+    "lat": 10.3157,
+    "lon": 123.8854
+  },
+  "Delhi": {
+    "lat": 28.6139,
+    "lon": 77.209
+  },
+  "Mumbai": {
+    "lat": 19.076,
+    "lon": 72.8777
+  },
+  "Jaipur": {
+    "lat": 26.9124,
+    "lon": 75.7873
+  },
+  "Bengaluru": {
+    "lat": 12.9716,
+    "lon": 77.5946
+  },
+  "GoaPanaji": {
+    "lat": 15.4909,
+    "lon": 73.8278
+  },
+  "Beijing": {
+    "lat": 39.9042,
+    "lon": 116.4074
+  },
+  "Shanghai": {
+    "lat": 31.2304,
+    "lon": 121.4737
+  },
+  "Guangzhou": {
+    "lat": 23.1291,
+    "lon": 113.2644
+  },
+  "Shenzhen": {
+    "lat": 22.5431,
+    "lon": 114.0579
+  },
+  "Chengdu": {
+    "lat": 30.5728,
+    "lon": 104.0668
+  },
+  "Taipei": {
+    "lat": 25.033,
+    "lon": 121.5654
+  },
+  "Kaohsiung": {
+    "lat": 22.6273,
+    "lon": 120.3014
+  },
+  "HongKong": {
+    "lat": 22.3193,
+    "lon": 114.1694
+  },
+  "TelAviv": {
+    "lat": 32.0853,
+    "lon": 34.7818
+  },
+  "Jerusalem": {
+    "lat": 31.7683,
+    "lon": 35.2137
+  },
+  "Amman": {
+    "lat": 31.9454,
+    "lon": 35.9284
+  },
+  "Aqaba": {
+    "lat": 29.5319,
+    "lon": 35.0061
+  },
+  "Cairo": {
+    "lat": 30.0444,
+    "lon": 31.2357
+  },
+  "Alexandria": {
+    "lat": 31.2001,
+    "lon": 29.9187
+  },
+  "Luxor": {
+    "lat": 25.6872,
+    "lon": 32.6396
+  },
+  "Marrakech": {
+    "lat": 31.6295,
+    "lon": -7.9811
+  },
+  "Casablanca": {
+    "lat": 33.5731,
+    "lon": -7.5898
+  },
+  "Fes": {
+    "lat": 34.0331,
+    "lon": -5.0003
+  },
+  "Rabat": {
+    "lat": 34.0209,
+    "lon": -6.8416
+  },
+  "Tangier": {
+    "lat": 35.7595,
+    "lon": -5.834
+  },
+  "CapeTown": {
+    "lat": -33.9249,
+    "lon": 18.4241
+  },
+  "Johannesburg": {
+    "lat": -26.2041,
+    "lon": 28.0473
+  },
+  "Durban": {
+    "lat": -29.8587,
+    "lon": 31.0218
+  },
+  "Nairobi": {
+    "lat": -1.2921,
+    "lon": 36.8219
+  },
+  "Mombasa": {
+    "lat": -4.0435,
+    "lon": 39.6682
+  },
+  "Tbilisi": {
+    "lat": 41.7151,
+    "lon": 44.8271
+  },
+  "Batumi": {
+    "lat": 41.6168,
+    "lon": 41.6367
+  },
+  "Yerevan": {
+    "lat": 40.1792,
+    "lon": 44.4991
+  },
+  "Baku": {
+    "lat": 40.4093,
+    "lon": 49.8671
+  },
+  "Doha": {
+    "lat": 25.2854,
+    "lon": 51.531
+  },
+  "Riyadh": {
+    "lat": 24.7136,
+    "lon": 46.6753
+  },
+  "Jeddah": {
+    "lat": 21.4858,
+    "lon": 39.1925
+  },
+  "Muscat": {
+    "lat": 23.588,
+    "lon": 58.3829
+  }
 };
 
 const placeCategories = {
@@ -435,14 +1995,9 @@ function setPlacesStatus(message, isError=false) {
   status.textContent=message;
   status.classList.toggle('error',isError);
 }
-// The Worker currently supports only these specific neighbourhoods.
-const workerAreaNames = {
-  Istanbul: {'Kadıköy':'Kadikoy','Beşiktaş':'Besiktas','Nişantaşı':'Nisantasi','Balat':'Balat'},
-  Paris: {'Montmartre':'Montmartre','Le Marais':'Le Marais','Saint-Germain-des-Prés':'Saint-Germain-des-Prés'},
-  London: {'Soho':'Soho','Shoreditch':'Shoreditch','Camden':'Camden'}
-};
-function workerArea(city, area) { return workerAreaNames[city]?.[area] || ''; }
-function placeCacheKey(city, category, area='') { return `tripwise-osm-places-v2-${city}-${category}-${area || 'centre'}`; }
+// V5: all displayed neighbourhoods are supported by the Worker.
+function workerArea(city, area) { return (knownAreas[city] || []).includes(area) ? area : ''; }
+function placeCacheKey(city, category, area='') { return `tripwise-osm-places-v5global-${city}-${category}-${area || 'centre'}`; }
 function safeText(value) {
   return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 }
@@ -456,6 +2011,10 @@ function selectOptions(select, values) {
   values.forEach(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;select.appendChild(option);});
 }
 function initExplorer() {
+  const planner=document.getElementById('destination');
+  const original=planner.value;
+  selectOptions(planner,Object.entries(countryDestinations).flatMap(([country,items])=>items.map(city=>[city,`${city.replace(/([a-z])([A-Z])/g,'$1 $2')}, ${country}`])));
+  if(cityCentres[original]) planner.value=original;
   const country=document.getElementById('explorerCountry');
   selectOptions(country,Object.keys(countryDestinations).map(k=>[k,k]));
   const dest=document.getElementById('destination').value;
@@ -500,11 +2059,11 @@ function updateExplorerAreas() {
 function updateAreaHint() {
   const area=document.getElementById('explorerArea').value;
   const city=document.getElementById('explorerDestination').value;
-  document.getElementById('areaHint').textContent=area
-    ? workerArea(city,area)
-      ? (city === "Istanbul" && area === "Kadıköy" ? `Live OpenStreetMap search covers the Kadıköy administrative district.` : `Live OpenStreetMap search is available around ${area} (approximately 2 km).`)
-      : `${area} is not yet supported by our live API. An OpenStreetMap search link will be provided.`
-    : 'Live OpenStreetMap search covers approximately 2 km around the selected city centre.';
+  document.getElementById('areaHint').textContent = area
+    ? (city==='Istanbul' && area==='Kadıköy'
+      ? 'Live search covers the Kadıköy administrative district.'
+      : `Live search covers approximately 2 km around ${area}.`)
+    : 'Live search covers approximately 3.5 km around the selected city centre.';
 }
 
 function resetPlaceResults() {
@@ -537,7 +2096,7 @@ function displayCurrentPlaces() {
   more.classList.toggle('hidden',count>=filtered.length);
   const areaDescription = currentPlaceCity === "Istanbul" && currentPlaceArea === "Kadıköy"
     ? "Kadıköy administrative district"
-    : `${currentPlaceArea || `central ${currentPlaceCity}`} (about 2 km)`;
+    : `${currentPlaceArea || `central ${currentPlaceCity}`} (about ${currentPlaceArea ? "2" : "3.5"} km)`;
   setPlacesStatus(`${filtered.length} named map record${filtered.length===1?'':'s'} match · showing ${count}. Search area: ${areaDescription}. Results depend on OpenStreetMap coverage; opening hours and ratings are not verified.`);
 }
 function renderPlaceCards(elements, city, category, area='') {
@@ -628,7 +2187,7 @@ async function findRealPlaces() {
   document.getElementById('placesResults').replaceChildren();
   setPlacesStatus(`Searching real OpenStreetMap places around ${area || `central ${city}`}…`);
   const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),25000);
+  const timer=setTimeout(()=>controller.abort(),50000);
   try {
     const params=new URLSearchParams({city,category});
     if(apiArea) params.set('area',apiArea);
