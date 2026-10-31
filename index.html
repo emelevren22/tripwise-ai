@@ -2502,6 +2502,16 @@ document.getElementById('exportPlan').addEventListener('click',exportItinerary);
 document.getElementById('printPlan').addEventListener('click',()=>{renderPlan();setTab('plan');window.print();});
 document.getElementById('feedbackBtn').addEventListener('click',()=>{const message=prompt('What should Tripwise AI do better? Your feedback stays in this prototype and is not sent anywhere.');if(message&&message.trim())showToast('Thanks — this prototype does not transmit feedback yet.');});
 loadPreferences();
+  const destinationSelect = document.getElementById('destination');
+const destinationOptions = Array.from(
+  destinationSelect.querySelectorAll('option')
+);
+
+destinationOptions.sort((a, b) =>
+  a.textContent.trim().localeCompare(b.textContent.trim(), 'en')
+);
+
+destinationSelect.replaceChildren(...destinationOptions);
 renderPlan(); analyzeReviews(); renderShortlist();
 </script>
 </body>
