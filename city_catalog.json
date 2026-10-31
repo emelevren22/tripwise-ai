@@ -1,0 +1,1605 @@
+{
+  "countries": {
+    "Portugal": [
+      "Lisbon",
+      "Porto",
+      "Faro",
+      "Coimbra",
+      "Braga",
+      "Funchal"
+    ],
+    "France": [
+      "Paris",
+      "Nice",
+      "Lyon",
+      "Marseille",
+      "Bordeaux",
+      "Toulouse",
+      "Strasbourg",
+      "Lille",
+      "Nantes"
+    ],
+    "United Kingdom": [
+      "London",
+      "Edinburgh",
+      "Glasgow",
+      "Manchester",
+      "Liverpool",
+      "Birmingham",
+      "Bristol",
+      "Oxford",
+      "Bath"
+    ],
+    "Denmark": [
+      "Copenhagen",
+      "Aarhus",
+      "Odense"
+    ],
+    "Italy": [
+      "Rome",
+      "Milan",
+      "Florence",
+      "Venice",
+      "Naples",
+      "Turin",
+      "Bologna",
+      "Verona",
+      "Genoa",
+      "Palermo",
+      "Catania",
+      "Pisa",
+      "Siena",
+      "Bari"
+    ],
+    "Spain": [
+      "Barcelona",
+      "Madrid",
+      "Seville",
+      "Valencia",
+      "Malaga",
+      "Granada",
+      "Bilbao",
+      "Zaragoza",
+      "Alicante",
+      "Palma"
+    ],
+    "Germany": [
+      "Berlin",
+      "Munich",
+      "Hamburg",
+      "Frankfurt",
+      "Cologne",
+      "Dusseldorf",
+      "Stuttgart",
+      "Dresden",
+      "Leipzig",
+      "Nuremberg"
+    ],
+    "Netherlands": [
+      "Amsterdam",
+      "Rotterdam",
+      "TheHague",
+      "Utrecht",
+      "Eindhoven",
+      "Maastricht"
+    ],
+    "Switzerland": [
+      "Zurich",
+      "Geneva",
+      "Basel",
+      "Bern",
+      "Lucerne",
+      "Lausanne"
+    ],
+    "Greece": [
+      "Athens",
+      "Thessaloniki",
+      "Heraklion",
+      "Chania",
+      "Rhodes"
+    ],
+    "Austria": [
+      "Vienna",
+      "Salzburg",
+      "Innsbruck",
+      "Graz",
+      "Linz"
+    ],
+    "Czechia": [
+      "Prague",
+      "Brno",
+      "CeskyKrumlov"
+    ],
+    "Hungary": [
+      "Budapest",
+      "Debrecen",
+      "Szeged"
+    ],
+    "Türkiye": [
+      "Istanbul",
+      "Antalya",
+      "Izmir",
+      "Bodrum",
+      "Marmaris",
+      "Cappadocia",
+      "Pamukkale",
+      "Ankara",
+      "Bursa",
+      "Eskisehir",
+      "Trabzon",
+      "Gaziantep",
+      "Mersin",
+      "Canakkale",
+      "Fethiye",
+      "Kas",
+      "Alanya",
+      "Adana",
+      "Sanliurfa",
+      "Mardin",
+      "Kusadasi"
+    ],
+    "USA": [
+      "NewYork",
+      "LosAngeles",
+      "SanFrancisco",
+      "Chicago",
+      "Boston",
+      "Miami",
+      "WashingtonDC",
+      "Seattle",
+      "LasVegas",
+      "Orlando",
+      "SanDiego",
+      "Austin",
+      "NewOrleans"
+    ],
+    "Japan": [
+      "Tokyo",
+      "Osaka",
+      "Kyoto",
+      "Yokohama",
+      "Sapporo",
+      "Hiroshima",
+      "Fukuoka",
+      "Nagoya",
+      "Nara"
+    ],
+    "UAE": [
+      "Dubai",
+      "AbuDhabi",
+      "Sharjah"
+    ],
+    "Belgium": [
+      "Brussels",
+      "Bruges",
+      "Antwerp",
+      "Ghent"
+    ],
+    "Ireland": [
+      "Dublin",
+      "Cork",
+      "Galway"
+    ],
+    "Norway": [
+      "Oslo",
+      "Bergen",
+      "Tromso"
+    ],
+    "Sweden": [
+      "Stockholm",
+      "Gothenburg",
+      "Malmo"
+    ],
+    "Finland": [
+      "Helsinki",
+      "Turku",
+      "Tampere"
+    ],
+    "Poland": [
+      "Warsaw",
+      "Krakow",
+      "Gdansk",
+      "Wroclaw",
+      "Poznan"
+    ],
+    "Croatia": [
+      "Zagreb",
+      "Split",
+      "Dubrovnik",
+      "Zadar",
+      "Pula"
+    ],
+    "Slovenia": [
+      "Ljubljana",
+      "Bled"
+    ],
+    "Slovakia": [
+      "Bratislava",
+      "Kosice"
+    ],
+    "Romania": [
+      "Bucharest",
+      "ClujNapoca",
+      "Brasov",
+      "Sibiu",
+      "Timisoara"
+    ],
+    "Bulgaria": [
+      "Sofia",
+      "Plovdiv",
+      "Varna",
+      "Burgas"
+    ],
+    "Serbia": [
+      "Belgrade",
+      "NoviSad"
+    ],
+    "Bosnia and Herzegovina": [
+      "Sarajevo",
+      "Mostar"
+    ],
+    "Montenegro": [
+      "Kotor",
+      "Budva",
+      "Podgorica"
+    ],
+    "Albania": [
+      "Tirana",
+      "Durres",
+      "Saranda"
+    ],
+    "North Macedonia": [
+      "Skopje",
+      "Ohrid"
+    ],
+    "Estonia": [
+      "Tallinn",
+      "Tartu"
+    ],
+    "Latvia": [
+      "Riga",
+      "Jurmala"
+    ],
+    "Lithuania": [
+      "Vilnius",
+      "Kaunas"
+    ],
+    "Iceland": [
+      "Reykjavik",
+      "Akureyri"
+    ],
+    "Luxembourg": [
+      "LuxembourgCity"
+    ],
+    "Malta": [
+      "Valletta",
+      "Sliema"
+    ],
+    "Cyprus": [
+      "Nicosia",
+      "Limassol",
+      "Paphos"
+    ],
+    "Canada": [
+      "Toronto",
+      "Vancouver",
+      "Montreal",
+      "QuebecCity",
+      "Ottawa",
+      "Calgary"
+    ],
+    "Mexico": [
+      "MexicoCity",
+      "Cancun",
+      "Guadalajara",
+      "Oaxaca"
+    ],
+    "Brazil": [
+      "RioDeJaneiro",
+      "SaoPaulo",
+      "Salvador",
+      "Florianopolis"
+    ],
+    "Argentina": [
+      "BuenosAires",
+      "Mendoza",
+      "CordobaAR"
+    ],
+    "Chile": [
+      "Santiago",
+      "Valparaiso"
+    ],
+    "Colombia": [
+      "Bogota",
+      "Medellin",
+      "Cartagena"
+    ],
+    "Peru": [
+      "Lima",
+      "Cusco",
+      "Arequipa"
+    ],
+    "Australia": [
+      "Sydney",
+      "Melbourne",
+      "Brisbane",
+      "Perth",
+      "Adelaide"
+    ],
+    "New Zealand": [
+      "Auckland",
+      "Wellington",
+      "Queenstown",
+      "Christchurch"
+    ],
+    "South Korea": [
+      "Seoul",
+      "Busan",
+      "Incheon"
+    ],
+    "Thailand": [
+      "Bangkok",
+      "ChiangMai",
+      "Phuket"
+    ],
+    "Vietnam": [
+      "Hanoi",
+      "HoChiMinhCity",
+      "DaNang",
+      "HoiAn"
+    ],
+    "Singapore": [
+      "Singapore"
+    ],
+    "Malaysia": [
+      "KualaLumpur",
+      "Penang",
+      "Malacca"
+    ],
+    "Indonesia": [
+      "Jakarta",
+      "Denpasar",
+      "Yogyakarta"
+    ],
+    "Philippines": [
+      "Manila",
+      "CebuCity"
+    ],
+    "India": [
+      "Delhi",
+      "Mumbai",
+      "Jaipur",
+      "Bengaluru",
+      "GoaPanaji"
+    ],
+    "China": [
+      "Beijing",
+      "Shanghai",
+      "Guangzhou",
+      "Shenzhen",
+      "Chengdu"
+    ],
+    "Taiwan": [
+      "Taipei",
+      "Kaohsiung"
+    ],
+    "Hong Kong": [
+      "HongKong"
+    ],
+    "Israel": [
+      "TelAviv",
+      "Jerusalem"
+    ],
+    "Jordan": [
+      "Amman",
+      "Aqaba"
+    ],
+    "Egypt": [
+      "Cairo",
+      "Alexandria",
+      "Luxor"
+    ],
+    "Morocco": [
+      "Marrakech",
+      "Casablanca",
+      "Fes",
+      "Rabat",
+      "Tangier"
+    ],
+    "South Africa": [
+      "CapeTown",
+      "Johannesburg",
+      "Durban"
+    ],
+    "Kenya": [
+      "Nairobi",
+      "Mombasa"
+    ],
+    "Georgia": [
+      "Tbilisi",
+      "Batumi"
+    ],
+    "Armenia": [
+      "Yerevan"
+    ],
+    "Azerbaijan": [
+      "Baku"
+    ],
+    "Qatar": [
+      "Doha"
+    ],
+    "Saudi Arabia": [
+      "Riyadh",
+      "Jeddah"
+    ],
+    "Oman": [
+      "Muscat"
+    ]
+  },
+  "cityCentres": {
+    "Lisbon": [
+      38.7223,
+      -9.1393
+    ],
+    "Paris": [
+      48.8566,
+      2.3522
+    ],
+    "London": [
+      51.5072,
+      -0.1276
+    ],
+    "Copenhagen": [
+      55.6761,
+      12.5683
+    ],
+    "Nice": [
+      43.7102,
+      7.262
+    ],
+    "Lyon": [
+      45.764,
+      4.8357
+    ],
+    "Rome": [
+      41.9028,
+      12.4964
+    ],
+    "Milan": [
+      45.4642,
+      9.19
+    ],
+    "Florence": [
+      43.7696,
+      11.2558
+    ],
+    "Venice": [
+      45.4408,
+      12.3155
+    ],
+    "Barcelona": [
+      41.3874,
+      2.1686
+    ],
+    "Madrid": [
+      40.4168,
+      -3.7038
+    ],
+    "Berlin": [
+      52.52,
+      13.405
+    ],
+    "Munich": [
+      48.1351,
+      11.582
+    ],
+    "Amsterdam": [
+      52.3676,
+      4.9041
+    ],
+    "Zurich": [
+      47.3769,
+      8.5417
+    ],
+    "Athens": [
+      37.9838,
+      23.7275
+    ],
+    "Vienna": [
+      48.2082,
+      16.3738
+    ],
+    "Prague": [
+      50.0755,
+      14.4378
+    ],
+    "Budapest": [
+      47.4979,
+      19.0402
+    ],
+    "NewYork": [
+      40.7128,
+      -74.006
+    ],
+    "Tokyo": [
+      35.6762,
+      139.6503
+    ],
+    "Dubai": [
+      25.2048,
+      55.2708
+    ],
+    "Istanbul": [
+      41.0082,
+      28.9784
+    ],
+    "Antalya": [
+      36.8969,
+      30.7133
+    ],
+    "Izmir": [
+      38.4237,
+      27.1428
+    ],
+    "Bodrum": [
+      37.0344,
+      27.4305
+    ],
+    "Marmaris": [
+      36.8549,
+      28.2742
+    ],
+    "Cappadocia": [
+      38.6431,
+      34.8289
+    ],
+    "Pamukkale": [
+      37.9204,
+      29.1217
+    ],
+    "Porto": [
+      41.1579,
+      -8.6291
+    ],
+    "Faro": [
+      37.0194,
+      -7.9304
+    ],
+    "Coimbra": [
+      40.2033,
+      -8.4103
+    ],
+    "Braga": [
+      41.5454,
+      -8.4265
+    ],
+    "Funchal": [
+      32.6669,
+      -16.9241
+    ],
+    "Marseille": [
+      43.2965,
+      5.3698
+    ],
+    "Bordeaux": [
+      44.8378,
+      -0.5792
+    ],
+    "Toulouse": [
+      43.6047,
+      1.4442
+    ],
+    "Strasbourg": [
+      48.5734,
+      7.7521
+    ],
+    "Lille": [
+      50.6292,
+      3.0573
+    ],
+    "Nantes": [
+      47.2184,
+      -1.5536
+    ],
+    "Edinburgh": [
+      55.9533,
+      -3.1883
+    ],
+    "Glasgow": [
+      55.8642,
+      -4.2518
+    ],
+    "Manchester": [
+      53.4808,
+      -2.2426
+    ],
+    "Liverpool": [
+      53.4084,
+      -2.9916
+    ],
+    "Birmingham": [
+      52.4862,
+      -1.8904
+    ],
+    "Bristol": [
+      51.4545,
+      -2.5879
+    ],
+    "Oxford": [
+      51.752,
+      -1.2577
+    ],
+    "Bath": [
+      51.3811,
+      -2.359
+    ],
+    "Aarhus": [
+      56.1629,
+      10.2039
+    ],
+    "Odense": [
+      55.4038,
+      10.4024
+    ],
+    "Naples": [
+      40.8518,
+      14.2681
+    ],
+    "Turin": [
+      45.0703,
+      7.6869
+    ],
+    "Bologna": [
+      44.4949,
+      11.3426
+    ],
+    "Verona": [
+      45.4384,
+      10.9916
+    ],
+    "Genoa": [
+      44.4056,
+      8.9463
+    ],
+    "Palermo": [
+      38.1157,
+      13.3615
+    ],
+    "Catania": [
+      37.5079,
+      15.083
+    ],
+    "Pisa": [
+      43.7228,
+      10.4017
+    ],
+    "Siena": [
+      43.3188,
+      11.3308
+    ],
+    "Bari": [
+      41.1171,
+      16.8719
+    ],
+    "Seville": [
+      37.3891,
+      -5.9845
+    ],
+    "Valencia": [
+      39.4699,
+      -0.3763
+    ],
+    "Malaga": [
+      36.7213,
+      -4.4214
+    ],
+    "Granada": [
+      37.1773,
+      -3.5986
+    ],
+    "Bilbao": [
+      43.263,
+      -2.935
+    ],
+    "Zaragoza": [
+      41.6488,
+      -0.8891
+    ],
+    "Alicante": [
+      38.3452,
+      -0.481
+    ],
+    "Palma": [
+      39.5696,
+      2.6502
+    ],
+    "Hamburg": [
+      53.5511,
+      9.9937
+    ],
+    "Frankfurt": [
+      50.1109,
+      8.6821
+    ],
+    "Cologne": [
+      50.9375,
+      6.9603
+    ],
+    "Dusseldorf": [
+      51.2277,
+      6.7735
+    ],
+    "Stuttgart": [
+      48.7758,
+      9.1829
+    ],
+    "Dresden": [
+      51.0504,
+      13.7373
+    ],
+    "Leipzig": [
+      51.3397,
+      12.3731
+    ],
+    "Nuremberg": [
+      49.4521,
+      11.0767
+    ],
+    "Rotterdam": [
+      51.9244,
+      4.4777
+    ],
+    "TheHague": [
+      52.0705,
+      4.3007
+    ],
+    "Utrecht": [
+      52.0907,
+      5.1214
+    ],
+    "Eindhoven": [
+      51.4416,
+      5.4697
+    ],
+    "Maastricht": [
+      50.8514,
+      5.691
+    ],
+    "Geneva": [
+      46.2044,
+      6.1432
+    ],
+    "Basel": [
+      47.5596,
+      7.5886
+    ],
+    "Bern": [
+      46.948,
+      7.4474
+    ],
+    "Lucerne": [
+      47.0502,
+      8.3093
+    ],
+    "Lausanne": [
+      46.5197,
+      6.6323
+    ],
+    "Thessaloniki": [
+      40.6401,
+      22.9444
+    ],
+    "Heraklion": [
+      35.3387,
+      25.1442
+    ],
+    "Chania": [
+      35.5138,
+      24.018
+    ],
+    "Rhodes": [
+      36.4341,
+      28.2176
+    ],
+    "Salzburg": [
+      47.8095,
+      13.055
+    ],
+    "Innsbruck": [
+      47.2692,
+      11.4041
+    ],
+    "Graz": [
+      47.0707,
+      15.4395
+    ],
+    "Linz": [
+      48.3069,
+      14.2858
+    ],
+    "Brno": [
+      49.1951,
+      16.6068
+    ],
+    "CeskyKrumlov": [
+      48.8127,
+      14.3175
+    ],
+    "Debrecen": [
+      47.5316,
+      21.6273
+    ],
+    "Szeged": [
+      46.253,
+      20.1414
+    ],
+    "Ankara": [
+      39.9334,
+      32.8597
+    ],
+    "Bursa": [
+      40.1885,
+      29.061
+    ],
+    "Eskisehir": [
+      39.7767,
+      30.5206
+    ],
+    "Trabzon": [
+      41.0027,
+      39.7168
+    ],
+    "Gaziantep": [
+      37.0662,
+      37.3833
+    ],
+    "Mersin": [
+      36.8121,
+      34.6415
+    ],
+    "Canakkale": [
+      40.1467,
+      26.4086
+    ],
+    "Fethiye": [
+      36.6217,
+      29.1164
+    ],
+    "Kas": [
+      36.2018,
+      29.6377
+    ],
+    "Alanya": [
+      36.5438,
+      31.9998
+    ],
+    "Adana": [
+      37,
+      35.3213
+    ],
+    "Sanliurfa": [
+      37.1674,
+      38.7955
+    ],
+    "Mardin": [
+      37.3122,
+      40.7351
+    ],
+    "Kusadasi": [
+      37.8579,
+      27.261
+    ],
+    "LosAngeles": [
+      34.0522,
+      -118.2437
+    ],
+    "SanFrancisco": [
+      37.7749,
+      -122.4194
+    ],
+    "Chicago": [
+      41.8781,
+      -87.6298
+    ],
+    "Boston": [
+      42.3601,
+      -71.0589
+    ],
+    "Miami": [
+      25.7617,
+      -80.1918
+    ],
+    "WashingtonDC": [
+      38.9072,
+      -77.0369
+    ],
+    "Seattle": [
+      47.6062,
+      -122.3321
+    ],
+    "LasVegas": [
+      36.1699,
+      -115.1398
+    ],
+    "Orlando": [
+      28.5383,
+      -81.3792
+    ],
+    "SanDiego": [
+      32.7157,
+      -117.1611
+    ],
+    "Austin": [
+      30.2672,
+      -97.7431
+    ],
+    "NewOrleans": [
+      29.9511,
+      -90.0715
+    ],
+    "Osaka": [
+      34.6937,
+      135.5023
+    ],
+    "Kyoto": [
+      35.0116,
+      135.7681
+    ],
+    "Yokohama": [
+      35.4437,
+      139.638
+    ],
+    "Sapporo": [
+      43.0618,
+      141.3545
+    ],
+    "Hiroshima": [
+      34.3853,
+      132.4553
+    ],
+    "Fukuoka": [
+      33.5902,
+      130.4017
+    ],
+    "Nagoya": [
+      35.1815,
+      136.9066
+    ],
+    "Nara": [
+      34.6851,
+      135.8048
+    ],
+    "AbuDhabi": [
+      24.4539,
+      54.3773
+    ],
+    "Sharjah": [
+      25.3463,
+      55.4209
+    ],
+    "Brussels": [
+      50.8503,
+      4.3517
+    ],
+    "Bruges": [
+      51.2093,
+      3.2247
+    ],
+    "Antwerp": [
+      51.2194,
+      4.4025
+    ],
+    "Ghent": [
+      51.0543,
+      3.7174
+    ],
+    "Dublin": [
+      53.3498,
+      -6.2603
+    ],
+    "Cork": [
+      51.8985,
+      -8.4756
+    ],
+    "Galway": [
+      53.2707,
+      -9.0568
+    ],
+    "Oslo": [
+      59.9139,
+      10.7522
+    ],
+    "Bergen": [
+      60.3913,
+      5.3221
+    ],
+    "Tromso": [
+      69.6492,
+      18.9553
+    ],
+    "Stockholm": [
+      59.3293,
+      18.0686
+    ],
+    "Gothenburg": [
+      57.7089,
+      11.9746
+    ],
+    "Malmo": [
+      55.605,
+      13.0038
+    ],
+    "Helsinki": [
+      60.1699,
+      24.9384
+    ],
+    "Turku": [
+      60.4518,
+      22.2666
+    ],
+    "Tampere": [
+      61.4978,
+      23.761
+    ],
+    "Warsaw": [
+      52.2297,
+      21.0122
+    ],
+    "Krakow": [
+      50.0647,
+      19.945
+    ],
+    "Gdansk": [
+      54.352,
+      18.6466
+    ],
+    "Wroclaw": [
+      51.1079,
+      17.0385
+    ],
+    "Poznan": [
+      52.4064,
+      16.9252
+    ],
+    "Zagreb": [
+      45.815,
+      15.9819
+    ],
+    "Split": [
+      43.5081,
+      16.4402
+    ],
+    "Dubrovnik": [
+      42.6507,
+      18.0944
+    ],
+    "Zadar": [
+      44.1194,
+      15.2314
+    ],
+    "Pula": [
+      44.8666,
+      13.8496
+    ],
+    "Ljubljana": [
+      46.0569,
+      14.5058
+    ],
+    "Bled": [
+      46.3683,
+      14.1146
+    ],
+    "Bratislava": [
+      48.1486,
+      17.1077
+    ],
+    "Kosice": [
+      48.7164,
+      21.2611
+    ],
+    "Bucharest": [
+      44.4268,
+      26.1025
+    ],
+    "ClujNapoca": [
+      46.7712,
+      23.6236
+    ],
+    "Brasov": [
+      45.6579,
+      25.6012
+    ],
+    "Sibiu": [
+      45.7983,
+      24.1256
+    ],
+    "Timisoara": [
+      45.7489,
+      21.2087
+    ],
+    "Sofia": [
+      42.6977,
+      23.3219
+    ],
+    "Plovdiv": [
+      42.1354,
+      24.7453
+    ],
+    "Varna": [
+      43.2141,
+      27.9147
+    ],
+    "Burgas": [
+      42.5048,
+      27.4626
+    ],
+    "Belgrade": [
+      44.7866,
+      20.4489
+    ],
+    "NoviSad": [
+      45.2671,
+      19.8335
+    ],
+    "Sarajevo": [
+      43.8563,
+      18.4131
+    ],
+    "Mostar": [
+      43.3438,
+      17.8078
+    ],
+    "Kotor": [
+      42.4247,
+      18.7712
+    ],
+    "Budva": [
+      42.2911,
+      18.84
+    ],
+    "Podgorica": [
+      42.4304,
+      19.2594
+    ],
+    "Tirana": [
+      41.3275,
+      19.8187
+    ],
+    "Durres": [
+      41.3231,
+      19.4414
+    ],
+    "Saranda": [
+      39.8756,
+      20.0053
+    ],
+    "Skopje": [
+      41.9981,
+      21.4254
+    ],
+    "Ohrid": [
+      41.1231,
+      20.8016
+    ],
+    "Tallinn": [
+      59.437,
+      24.7536
+    ],
+    "Tartu": [
+      58.3776,
+      26.729
+    ],
+    "Riga": [
+      56.9496,
+      24.1052
+    ],
+    "Jurmala": [
+      56.9677,
+      23.7704
+    ],
+    "Vilnius": [
+      54.6872,
+      25.2797
+    ],
+    "Kaunas": [
+      54.8985,
+      23.9036
+    ],
+    "Reykjavik": [
+      64.1466,
+      -21.9426
+    ],
+    "Akureyri": [
+      65.6835,
+      -18.0878
+    ],
+    "LuxembourgCity": [
+      49.6116,
+      6.1319
+    ],
+    "Valletta": [
+      35.8992,
+      14.5141
+    ],
+    "Sliema": [
+      35.9122,
+      14.5045
+    ],
+    "Nicosia": [
+      35.1856,
+      33.3823
+    ],
+    "Limassol": [
+      34.7071,
+      33.0226
+    ],
+    "Paphos": [
+      34.772,
+      32.4297
+    ],
+    "Toronto": [
+      43.6532,
+      -79.3832
+    ],
+    "Vancouver": [
+      49.2827,
+      -123.1207
+    ],
+    "Montreal": [
+      45.5017,
+      -73.5673
+    ],
+    "QuebecCity": [
+      46.8139,
+      -71.208
+    ],
+    "Ottawa": [
+      45.4215,
+      -75.6972
+    ],
+    "Calgary": [
+      51.0447,
+      -114.0719
+    ],
+    "MexicoCity": [
+      19.4326,
+      -99.1332
+    ],
+    "Cancun": [
+      21.1619,
+      -86.8515
+    ],
+    "Guadalajara": [
+      20.6597,
+      -103.3496
+    ],
+    "Oaxaca": [
+      17.0732,
+      -96.7266
+    ],
+    "RioDeJaneiro": [
+      -22.9068,
+      -43.1729
+    ],
+    "SaoPaulo": [
+      -23.5505,
+      -46.6333
+    ],
+    "Salvador": [
+      -12.9777,
+      -38.5016
+    ],
+    "Florianopolis": [
+      -27.5954,
+      -48.548
+    ],
+    "BuenosAires": [
+      -34.6037,
+      -58.3816
+    ],
+    "Mendoza": [
+      -32.8895,
+      -68.8458
+    ],
+    "CordobaAR": [
+      -31.4201,
+      -64.1888
+    ],
+    "Santiago": [
+      -33.4489,
+      -70.6693
+    ],
+    "Valparaiso": [
+      -33.0472,
+      -71.6127
+    ],
+    "Bogota": [
+      4.711,
+      -74.0721
+    ],
+    "Medellin": [
+      6.2442,
+      -75.5812
+    ],
+    "Cartagena": [
+      10.391,
+      -75.4794
+    ],
+    "Lima": [
+      -12.0464,
+      -77.0428
+    ],
+    "Cusco": [
+      -13.5319,
+      -71.9675
+    ],
+    "Arequipa": [
+      -16.409,
+      -71.5375
+    ],
+    "Sydney": [
+      -33.8688,
+      151.2093
+    ],
+    "Melbourne": [
+      -37.8136,
+      144.9631
+    ],
+    "Brisbane": [
+      -27.4698,
+      153.0251
+    ],
+    "Perth": [
+      -31.9523,
+      115.8613
+    ],
+    "Adelaide": [
+      -34.9285,
+      138.6007
+    ],
+    "Auckland": [
+      -36.8485,
+      174.7633
+    ],
+    "Wellington": [
+      -41.2865,
+      174.7767
+    ],
+    "Queenstown": [
+      -45.0312,
+      168.6626
+    ],
+    "Christchurch": [
+      -43.5321,
+      172.6362
+    ],
+    "Seoul": [
+      37.5665,
+      126.978
+    ],
+    "Busan": [
+      35.1796,
+      129.0756
+    ],
+    "Incheon": [
+      37.4563,
+      126.7052
+    ],
+    "Bangkok": [
+      13.7563,
+      100.5018
+    ],
+    "ChiangMai": [
+      18.7883,
+      98.9853
+    ],
+    "Phuket": [
+      7.8804,
+      98.3923
+    ],
+    "Hanoi": [
+      21.0278,
+      105.8342
+    ],
+    "HoChiMinhCity": [
+      10.8231,
+      106.6297
+    ],
+    "DaNang": [
+      16.0544,
+      108.2022
+    ],
+    "HoiAn": [
+      15.8801,
+      108.338
+    ],
+    "Singapore": [
+      1.3521,
+      103.8198
+    ],
+    "KualaLumpur": [
+      3.139,
+      101.6869
+    ],
+    "Penang": [
+      5.4141,
+      100.3288
+    ],
+    "Malacca": [
+      2.1896,
+      102.2501
+    ],
+    "Jakarta": [
+      -6.2088,
+      106.8456
+    ],
+    "Denpasar": [
+      -8.6705,
+      115.2126
+    ],
+    "Yogyakarta": [
+      -7.7956,
+      110.3695
+    ],
+    "Manila": [
+      14.5995,
+      120.9842
+    ],
+    "CebuCity": [
+      10.3157,
+      123.8854
+    ],
+    "Delhi": [
+      28.6139,
+      77.209
+    ],
+    "Mumbai": [
+      19.076,
+      72.8777
+    ],
+    "Jaipur": [
+      26.9124,
+      75.7873
+    ],
+    "Bengaluru": [
+      12.9716,
+      77.5946
+    ],
+    "GoaPanaji": [
+      15.4909,
+      73.8278
+    ],
+    "Beijing": [
+      39.9042,
+      116.4074
+    ],
+    "Shanghai": [
+      31.2304,
+      121.4737
+    ],
+    "Guangzhou": [
+      23.1291,
+      113.2644
+    ],
+    "Shenzhen": [
+      22.5431,
+      114.0579
+    ],
+    "Chengdu": [
+      30.5728,
+      104.0668
+    ],
+    "Taipei": [
+      25.033,
+      121.5654
+    ],
+    "Kaohsiung": [
+      22.6273,
+      120.3014
+    ],
+    "HongKong": [
+      22.3193,
+      114.1694
+    ],
+    "TelAviv": [
+      32.0853,
+      34.7818
+    ],
+    "Jerusalem": [
+      31.7683,
+      35.2137
+    ],
+    "Amman": [
+      31.9454,
+      35.9284
+    ],
+    "Aqaba": [
+      29.5319,
+      35.0061
+    ],
+    "Cairo": [
+      30.0444,
+      31.2357
+    ],
+    "Alexandria": [
+      31.2001,
+      29.9187
+    ],
+    "Luxor": [
+      25.6872,
+      32.6396
+    ],
+    "Marrakech": [
+      31.6295,
+      -7.9811
+    ],
+    "Casablanca": [
+      33.5731,
+      -7.5898
+    ],
+    "Fes": [
+      34.0331,
+      -5.0003
+    ],
+    "Rabat": [
+      34.0209,
+      -6.8416
+    ],
+    "Tangier": [
+      35.7595,
+      -5.834
+    ],
+    "CapeTown": [
+      -33.9249,
+      18.4241
+    ],
+    "Johannesburg": [
+      -26.2041,
+      28.0473
+    ],
+    "Durban": [
+      -29.8587,
+      31.0218
+    ],
+    "Nairobi": [
+      -1.2921,
+      36.8219
+    ],
+    "Mombasa": [
+      -4.0435,
+      39.6682
+    ],
+    "Tbilisi": [
+      41.7151,
+      44.8271
+    ],
+    "Batumi": [
+      41.6168,
+      41.6367
+    ],
+    "Yerevan": [
+      40.1792,
+      44.4991
+    ],
+    "Baku": [
+      40.4093,
+      49.8671
+    ],
+    "Doha": [
+      25.2854,
+      51.531
+    ],
+    "Riyadh": [
+      24.7136,
+      46.6753
+    ],
+    "Jeddah": [
+      21.4858,
+      39.1925
+    ],
+    "Muscat": [
+      23.588,
+      58.3829
+    ]
+  }
+}
