@@ -2203,7 +2203,7 @@ function toggleSavedPlace(place) {
   if(index>=0) shortlist.splice(index,1);
   else if(shortlist.length<250) shortlist.push(place);
   else {showToast('Shortlist limit reached (250 places).');return;}
-  saveShortlist();renderShortlist();
+  saveShortlist();renderShortlist();renderPlan();
   showToast(index>=0?'Removed from your shortlist.':'Place saved to your shortlist.');
 }
 function renderShortlist() {
@@ -2369,6 +2369,19 @@ function renderPlan() {
       const matchMarkup=matches.length?`<div>${matches.slice(0,2).map(m=>`<span class="match-label">Matches ${m}</span>`).join('')}</div>`:'';
       return `<div class="stop"><span class="time">${s[0]}</span><div><strong>${s[1]}</strong><small>${s[2]}</small>${matchMarkup}</div></div>`;
     }).join('');
+   if (i === 0 && dest === 'Paris') {
+  const savedCafe = shortlist.find(
+    p => p.city === dest && p.category === 'cafes'
+  );
+  const cafeStop = [...card.querySelectorAll('.stop')].find(
+    el => el.querySelector('strong')?.textContent === 'Neighbourhood café'
+  );
+  if (savedCafe && cafeStop) {
+    cafeStop.querySelector('strong').textContent = savedCafe.name;
+    cafeStop.querySelector('small').textContent =
+      'Saved from My Trip Shortlist · ' + (savedCafe.detail || 'Café');
+  }
+}
     root.appendChild(card);
   }
   renderCompare();
